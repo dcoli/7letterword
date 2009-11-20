@@ -39,7 +39,7 @@ public class GameController {
             {
 
                 Player currPlayer = gc_local.PObjectList.get(loop);
-                int bidValue = currPlayer.Bid(bidLetter,gc_local.BidList,gc_local.number_of_rounds);
+                int bidValue = currPlayer.Bid(bidLetter,gc_local.BidList,gc_local.number_of_rounds,gc_local.PlayerList);
                 // If player is full makes his value = 0.
                 if(bidValue < 0)
                 {
@@ -280,6 +280,7 @@ public class GameController {
             winnerIndex = winnerList.get(rand.nextInt(winnerList.size()));
             lastBid.winAmmount = lastBid.bidvalues.get(winnerIndex);
             lastBid.wonBy = gc_local.PlayerList.get(winnerIndex);
+
         }
 
         // Give the letter to Winner Index if he has less than 7 words
