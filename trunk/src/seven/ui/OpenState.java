@@ -24,18 +24,3 @@ public class OpenState {
 
     }
 }
-
-class SecretState{
-
-    ArrayList<Letter> secretLetters;
-
-    int score;
-    int total_letters;
-    public SecretState(int scoreL)
-    {
-
-        secretLetters = new ArrayList<Letter>();
-        score = scoreL;
-    }
-
-}
