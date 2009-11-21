@@ -1,4 +1,4 @@
-package seven.g0;
+package seven.g5.data;
 
 public class Letter {
 
