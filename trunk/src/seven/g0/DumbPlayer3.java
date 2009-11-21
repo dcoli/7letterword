@@ -5,7 +5,7 @@ import java.util.Random;
 import seven.ui.Letter;
 import seven.ui.Player;
 import seven.ui.PlayerBids;
-
+import seven.ui.SecretState;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -21,7 +21,7 @@ public class DumbPlayer3 implements Player{
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int total_rounds,ArrayList<String> PlayerList) {
+    public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int total_rounds,ArrayList<String> PlayerList, SecretState secretstate) {
         //throw new UnsupportedOperationException("Not supported yet.");
 //        Random rand = new Random();
 //        int val = rand.nextInt(10);

@@ -8,7 +8,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import sun.java2d.ScreenUpdateManager;
+//import sun.java2d.ScreenUpdateManager;
 
 /*
  * To change this template, choose Tools | Templates
