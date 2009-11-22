@@ -2,6 +2,7 @@ package seven.g5;
 
 import java.util.ArrayList;
 
+import seven.g5.Logger.LogLevel;
 import seven.g5.strategies.SimpleStrategy;
 import seven.g5.strategies.Strategy;
 import seven.ui.Letter;
@@ -11,9 +12,11 @@ import seven.ui.SecretState;
 
 public class G5_Scrabblista implements Player {
 
+	private Logger log;
 	private Strategy strategy;
 	
 	public G5_Scrabblista( ) {
+		log = new Logger(LogLevel.DEBUG, this.getClass());
 		strategy = new SimpleStrategy();
 	}
 	

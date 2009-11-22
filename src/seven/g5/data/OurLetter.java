@@ -12,13 +12,4 @@ public class OurLetter extends seven.ui.Letter {
 		super(c,s);
 		numberInGame = ScrabbleParameters.getCount( c );
 	}
-	
-	/**
-	 * @param numberOfTurnsLeft the number of characters that are still to be drawn, a function of the number of players * 7 - number of characters dispensed so far
-	 * @return the value of the letter times the chance of getting it.
-	 */
-	public float getAdjustedValue( int numberOfTurnsLeft ) {
-		float probability = (float)(numberInGame-numberSeen)/(float)numberOfTurnsLeft;
-		return (float)value * probability;
-	}
 }
