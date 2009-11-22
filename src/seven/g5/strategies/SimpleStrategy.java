@@ -160,7 +160,23 @@ public class SimpleStrategy extends Strategy {
 		words[size-1] = c;
 		return words;
 	}
+
+	public static void main( String[] args ) {
+		SimpleStrategy strat = new SimpleStrategy();
+		ArrayList<Letter> myHand = new ArrayList<Letter>();
+		
+		//ArrayList<String> myWordList = new ArrayList<String>();		
+		strat.binHeapOfCurrentWords.add(new Word("CAT"));
+		strat.binHeapOfCurrentWords.add(new Word("RAT"));
+		strat.binHeapOfCurrentWords.add(new Word("HAT"));
+		
+		while( strat.binHeapOfCurrentWords.size() > 0 ) {
+			System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
+		}
+	}
+	
 }
+
 class Dictionary
 {
     Hashtable<String,Boolean> wordlist;
@@ -179,19 +195,5 @@ class Dictionary
 //		float probability = (float)(numberInGame-numberSeen)/(float)numberOfTurnsLeft;
 //		return (float)value * probability;
 		return 0;
-	}
-
-	public static void main( String[] args ) {
-		SimpleStrategy strat = new SimpleStrategy();
-		ArrayList<Letter> myHand = new ArrayList<Letter>();
-
-		//ArrayList<String> myWordList = new ArrayList<String>();		
-		strat.binHeapOfCurrentWords.add(new Word("CAT"));
-		strat.binHeapOfCurrentWords.add(new Word("RAT"));
-		strat.binHeapOfCurrentWords.add(new Word("HAT"));
-				
-		while( strat.binHeapOfCurrentWords.size() > 0 ) {
-			System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
-		}
 	}
 }
