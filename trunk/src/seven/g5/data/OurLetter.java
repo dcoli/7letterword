@@ -7,7 +7,6 @@ public class OurLetter extends seven.ui.Letter {
     private int value;
 	//added
     private int numberInGame;
-	private int numberSeen;	
 	
 	public OurLetter(Character c, int s) {
 		super(c,s);
@@ -21,19 +20,5 @@ public class OurLetter extends seven.ui.Letter {
 	public float getAdjustedValue( int numberOfTurnsLeft ) {
 		float probability = (float)(numberInGame-numberSeen)/(float)numberOfTurnsLeft;
 		return (float)value * probability;
-	}
-	
-	public void setNumberSeen(int numberSeen) {
-		this.numberSeen = numberSeen;
-	}
-	/**
-	 * @return the numberSeen
-	 */
-	public int getNumberSeen() {
-		return numberSeen;
-	}
-
-	public int incrementNumberSeen() {
-		return ++numberSeen;
 	}
 }
