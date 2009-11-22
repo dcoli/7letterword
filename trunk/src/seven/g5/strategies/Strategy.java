@@ -3,16 +3,20 @@ package seven.g5.strategies;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import seven.g5.Logger;
+import seven.g5.Logger.LogLevel;
 import seven.g5.data.ScrabbleParameters;
 import seven.ui.Letter;
 import seven.ui.PlayerBids;
 
 public abstract class Strategy {
 	
+	protected Logger log;
 	protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
 	
-	public Strategy() {
+	public Strategy( ) {
 		initializeLettersRemaining();
+		log = new Logger(LogLevel.DEBUG, this.getClass());
 	}
 
 	private void initializeLettersRemaining() {

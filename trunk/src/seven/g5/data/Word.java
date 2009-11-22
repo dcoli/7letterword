@@ -1,7 +1,12 @@
 package seven.g5.data;
 
+import seven.ui.Scrabble;
+import seven.g5.Logger;
+import seven.g5.Logger.LogLevel;
+
 public class Word {
 
+	private Logger log = new Logger(LogLevel.DEBUG, this.getClass());
 	private String string;
 	/**
 	 * the sum of integer values of all letters
@@ -15,6 +20,19 @@ public class Word {
 
 	public Word( String stringRepresentation ) {
 		this.setString(stringRepresentation);
+		this.setScore(calculateScore(string));
+	}
+
+	private int calculateScore(String string2) {
+		score = 0;
+        for(int loop=0;loop<string2.length();loop++)
+        {
+            Character currChar = string2.charAt(loop);
+            score += ScrabbleParameters.getScore(currChar);
+//            log.debug(currChar+"="+ScrabbleParameters.getScore(currChar));
+        }
+        log.debug("score for " + string + ": " + score);
+        return score;
 	}
 
 	/**
@@ -55,7 +73,7 @@ public class Word {
 	/**
 	 * @return the string
 	 */
-	public String getString() {
+	public String toString() {
 		return string;
 	}
 }

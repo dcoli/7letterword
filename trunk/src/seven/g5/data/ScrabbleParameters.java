@@ -38,35 +38,33 @@ public final class ScrabbleParameters {
 		return 0;
 	}
 	
-//damnit, this already existed in satya's scrabble class
-/*	public static int getScore( String character ) {
-		if (character == Characters.A) return 1;
-		if (character == Characters.B) return 3;
-		if (character == Characters.C) return 3;
-		if (character == Characters.D) return 2;
-		if (character == Characters.E) return 1;
-		if (character == Characters.F) return 4;
-		if (character == Characters.G) return 2;
-		if (character == Characters.H) return 4;
-		if (character == Characters.I) return 1;
-		if (character == Characters.J) return 8;
-		if (character == Characters.K) return 5;
-		if (character == Characters.L) return 1;
-		if (character == Characters.M) return 3;
-		if (character == Characters.N) return 1;
-		if (character == Characters.O) return 1;
-		if (character == Characters.P) return 3;
-		if (character == Characters.Q) return 10;
-		if (character == Characters.R) return 1;
-		if (character == Characters.S) return 1;
-		if (character == Characters.T) return 1;
-		if (character == Characters.U) return 1;
-		if (character == Characters.V) return 4;
-		if (character == Characters.W) return 4;
-		if (character == Characters.X) return 8;
-		if (character == Characters.Y) return 4;
-		if (character == Characters.Z) return 10;
+	public static int getScore( Character character ) {
+		if (character == 'A') return 1;
+		if (character == 'B') return 3;
+		if (character == 'C') return 3;
+		if (character == 'D') return 2;
+		if (character == 'E') return 1;
+		if (character == 'F') return 4;
+		if (character == 'G') return 2;
+		if (character == 'H') return 4;
+		if (character == 'I') return 1;
+		if (character == 'J') return 8;
+		if (character == 'K') return 5;
+		if (character == 'L') return 1;
+		if (character == 'M') return 3;
+		if (character == 'N') return 1;
+		if (character == 'O') return 1;
+		if (character == 'P') return 3;
+		if (character == 'Q') return 10;
+		if (character == 'R') return 1;
+		if (character == 'S') return 1;
+		if (character == 'T') return 1;
+		if (character == 'U') return 1;
+		if (character == 'V') return 4;
+		if (character == 'W') return 4;
+		if (character == 'X') return 8;
+		if (character == 'Y') return 4;
+		if (character == 'Z') return 10;
 		return 0;
-	}
-*/	
+	}	
 }
