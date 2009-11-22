@@ -100,9 +100,7 @@ public class SimpleStrategy extends Strategy {
 		strat.listOfCurrentWords.add(new Word("CAT"));
 		strat.listOfCurrentWords.add(new Word("RAT"));
 		strat.listOfCurrentWords.add(new Word("HAT"));
-		
-		System.out.println((new Word("cat")).getScore());
-		
+				
 		while( strat.listOfCurrentWords.size() > 0 ) {
 			System.out.println("word "+strat.listOfCurrentWords.peek()+" is "+((Word)strat.listOfCurrentWords.poll()).getScore() );
 		}
