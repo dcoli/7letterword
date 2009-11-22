@@ -19,13 +19,12 @@ public class SimpleStrategy extends Strategy {
 	//initialized in the Strategy constructor
 	//protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
 	
-	PriorityQueue<Word> listOfCurrentWords = new PriorityQueue<Word>(1, 
+	PriorityQueue<Word> binHeapOfCurrentWords = new PriorityQueue<Word>(1, 
 			new Comparator<Word>() {
 				 public int compare(Word a, Word b)
 				 {
-				   System.out.println("Comparing Word Scores");
-				   int scoreA = a.getScore();
-				   int scoreB = b.getScore();
+				   float scoreA = a.getScore();
+				   float scoreB = b.getScore();
 				   if (scoreB>scoreA)
 				        return 1;
 				   else if (scoreB<scoreA)
@@ -58,11 +57,18 @@ public class SimpleStrategy extends Strategy {
 		return getBestWordOfList(getListOfFoundWords( hand1 ));
 	}
 	
+	private String getOptimalWordFromFuture( ArrayList<OurLetter> hand1 ) {
+		//here add every possible permutation of characters to fill out the rest of the hand
+		//then we'll see what words we can create with those
+		//then calculate the percentage chance of getting those letters (each Word's weightedScore)
+		return null;
+	}
+	
 	private String getBestWordOfList( ArrayList<Word> listOfFoundWords ) {
 		// TODO Auto-generated method stub
-		listOfCurrentWords.clear();
-		for( Word w: listOfFoundWords ) listOfCurrentWords.add(w);
-		return listOfCurrentWords.peek().toString();
+		binHeapOfCurrentWords.clear();
+		for( Word w: listOfFoundWords ) binHeapOfCurrentWords.add(w);
+		return binHeapOfCurrentWords.peek().toString();
 	}
 
 	private ArrayList<Word> getListOfFoundWords( ArrayList<OurLetter> hand2 ) {
@@ -97,12 +103,12 @@ public class SimpleStrategy extends Strategy {
 		ArrayList<OurLetter> myHand = new ArrayList<OurLetter>();
 
 		//ArrayList<String> myWordList = new ArrayList<String>();		
-		strat.listOfCurrentWords.add(new Word("CAT"));
-		strat.listOfCurrentWords.add(new Word("RAT"));
-		strat.listOfCurrentWords.add(new Word("HAT"));
+		strat.binHeapOfCurrentWords.add(new Word("CAT"));
+		strat.binHeapOfCurrentWords.add(new Word("RAT"));
+		strat.binHeapOfCurrentWords.add(new Word("HAT"));
 				
-		while( strat.listOfCurrentWords.size() > 0 ) {
-			System.out.println("word "+strat.listOfCurrentWords.peek()+" is "+((Word)strat.listOfCurrentWords.poll()).getScore() );
+		while( strat.binHeapOfCurrentWords.size() > 0 ) {
+			System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
 		}
 	}
 }
