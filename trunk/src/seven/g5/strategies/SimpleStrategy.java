@@ -157,6 +157,7 @@ public class SimpleStrategy extends Strategy {
 	public char[] getWordlist(){
 		char c = letter.getAlphabet();
 		size++;
+//there's a bug here
 		words[size-1] = c;
 		return words;
 	}
