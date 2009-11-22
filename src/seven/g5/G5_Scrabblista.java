@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import seven.g5.strategies.SimpleStrategy;
 import seven.g5.strategies.Strategy;
 import seven.ui.Letter;
+import seven.ui.Player;
 import seven.ui.PlayerBids;
+import seven.ui.SecretState;
 
-public class G5_Scrabblista {
+public class G5_Scrabblista implements Player {
 
 	private Strategy strategy;
 	
@@ -19,14 +21,17 @@ public class G5_Scrabblista {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int total_rounds,ArrayList<String> PlayerList) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-        return strategy.getBid(bidLetter, PlayerBidList, total_rounds, PlayerList);
-    }
-
-    public String returnWord() {
+   public String returnWord() {
         //throw new UnsupportedOperationException("Not supported yet.");
         return strategy.getFinalWord();
     }
+
+	@Override
+	public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList,
+			int totalRounds, ArrayList<String> PlayerList,
+			SecretState secretstate) {
+		// TODO Auto-generated method stub
+        return strategy.getBid(bidLetter, PlayerBidList, totalRounds, PlayerList);
+	}
 
 }
