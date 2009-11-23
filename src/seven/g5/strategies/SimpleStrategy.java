@@ -25,6 +25,7 @@ public class SimpleStrategy extends Strategy {
 	ArrayList<String> ListofWords = new ArrayList<String>();
 	char[] words = new char[size];
 	Dictionary sowpods = new Dictionary();
+	int currentRound = 0;
 
 	//colin
 	//private OurLetter currentLetter;
@@ -59,16 +60,35 @@ public class SimpleStrategy extends Strategy {
 	 */
 	public int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
 			int totalRounds, ArrayList<String> playerList, SecretState secretstate) {
-		// TODO Auto-generated method stub
-		this.hand = secretstate.getSecretLetters();
+
+		//get the letters we start with
+		if (currentRound++ == 0) {
+			this.hand = secretstate.getSecretLetters();
+			for (int i = 0; i<this.hand.size(); i++) {
+				decrementLettersRemaining(hand.get(i));
+			}
+		}
+
 		this.letter = bidLetter;
+		
+		//track how many of each letter remains (as far as we can tell)
+		if (this.letter != null) decrementLettersRemaining( this.letter );
+
 		this.playerList = playerList;
-		PlayerBids currentPlayerBids = (PlayerBids)(playerBidList.get(playerBidList.size()-1));
-		if( (currentPlayerBids.getWonBy()) == "G5_Scrabblista" )
-			this.bidpoints -= currentPlayerBids.getWinAmmount();
+		if( playerBidList.size() > 0 ) {
+			PlayerBids currentPlayerBids = (PlayerBids)(playerBidList.get(playerBidList.size()-1));
+			if( (currentPlayerBids.getWonBy()) == "G5_Scrabblista" )
+				this.bidpoints -= currentPlayerBids.getWinAmmount();
+			return 0;
+		}
 		return 0;
 	}
 	
+	private void decrementLettersRemaining(Letter letter2) {
+		int oldAmount = numberLettersRemaining.get(letter2.getAlphabet());
+		numberLettersRemaining.put(letter2.getAlphabet(), --oldAmount );
+	}
+
 	/**
 	 * @param hand the arraylist of characters currently in our hand
 	 * @return optimal word
@@ -173,14 +193,25 @@ public class SimpleStrategy extends Strategy {
 		SimpleStrategy strat = new SimpleStrategy();
 		ArrayList<Letter> myHand = new ArrayList<Letter>();
 		
-		//ArrayList<String> myWordList = new ArrayList<String>();		
-		strat.binHeapOfCurrentWords.add(new Word("CAT"));
-		strat.binHeapOfCurrentWords.add(new Word("RAT"));
-		strat.binHeapOfCurrentWords.add(new Word("HAT"));
+		myHand.add(new Letter('E', 0));
+		myHand.add(new Letter('F', 0));
+		myHand.add(new Letter('G', 0));
+		myHand.add(new Letter('H', 0));
 		
-		while( strat.binHeapOfCurrentWords.size() > 0 ) {
-			System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
+		for(int i=0; i<myHand.size(); i++) {
+			System.out.println(strat.numberLettersRemaining.get(((Letter)myHand.get(i)).getAlphabet()));
+			strat.decrementLettersRemaining(myHand.get(i));
+			System.out.println(strat.numberLettersRemaining.get(((Letter)myHand.get(i)).getAlphabet()));
 		}
+		
+		//ArrayList<String> myWordList = new ArrayList<String>();		
+//		strat.binHeapOfCurrentWords.add(new Word("CAT"));
+//		strat.binHeapOfCurrentWords.add(new Word("RAT"));
+//		strat.binHeapOfCurrentWords.add(new Word("HAT"));
+//		
+//		while( strat.binHeapOfCurrentWords.size() > 0 ) {
+//			System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
+//		}
 	}
 	
 }
