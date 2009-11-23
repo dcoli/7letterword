@@ -8,12 +8,15 @@ import seven.g5.Logger.LogLevel;
 import seven.g5.data.ScrabbleParameters;
 import seven.ui.Letter;
 import seven.ui.PlayerBids;
+import seven.ui.SecretState;
 
 public abstract class Strategy {
 	
 	protected Logger log;
 	protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
-	
+	protected int bidpoints = 100;
+	protected ArrayList<String> playerList;
+
 	public Strategy( ) {
 		initializeLettersRemaining();
 		log = new Logger(LogLevel.DEBUG, this.getClass());
@@ -49,7 +52,7 @@ public abstract class Strategy {
 	}
 
 	public abstract int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
-			int totalRounds, ArrayList<String> playerList);
+			int totalRounds, ArrayList<String> playerList, SecretState secretstate);
 
 	public abstract String getFinalWord();
 	
