@@ -15,6 +15,7 @@ import seven.g5.data.OurLetter;
 import seven.g5.data.Word;
 import seven.ui.Letter;
 import seven.ui.PlayerBids;
+import seven.ui.SecretState;
 
 public class SimpleStrategy extends Strategy {
 
@@ -30,7 +31,8 @@ public class SimpleStrategy extends Strategy {
 	private ArrayList<Letter> hand = new ArrayList<Letter>();
 	//initialized in the Strategy constructor
 	//protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
-	
+	//	protected int bidpoints = 100;
+
 	PriorityQueue<Word> binHeapOfCurrentWords = new PriorityQueue<Word>(1, 
 			new Comparator<Word>() {
 				 public int compare(Word a, Word b)
@@ -56,9 +58,14 @@ public class SimpleStrategy extends Strategy {
 	 * @return the value of the bid to place
 	 */
 	public int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
-			int totalRounds, ArrayList<String> playerList) {
+			int totalRounds, ArrayList<String> playerList, SecretState secretstate) {
 		// TODO Auto-generated method stub
+		this.hand = secretstate.getSecretLetters();
 		this.letter = bidLetter;
+		this.playerList = playerList;
+		PlayerBids currentPlayerBids = (PlayerBids)(playerBidList.get(playerBidList.size()-1));
+		if( (currentPlayerBids.getWonBy()) == "G5_Scrabblista" )
+			this.bidpoints -= currentPlayerBids.getWinAmmount();
 		return 0;
 	}
 	

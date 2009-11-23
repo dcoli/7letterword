@@ -34,7 +34,7 @@ public class G5_Scrabblista implements Player {
 			int totalRounds, ArrayList<String> PlayerList,
 			SecretState secretstate) {
 		// TODO Auto-generated method stub
-        return strategy.getBid(bidLetter, PlayerBidList, totalRounds, PlayerList);
+        return strategy.getBid(bidLetter, PlayerBidList, totalRounds, PlayerList, secretstate);
 	}
 
 }
