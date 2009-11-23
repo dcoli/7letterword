@@ -23,32 +23,32 @@ public abstract class Strategy {
 	}
 
 	private void initializeLettersRemaining() {
-		numberLettersRemaining.put('a', ScrabbleParameters.getCount('a'));
-		numberLettersRemaining.put('b', ScrabbleParameters.getCount('b'));
-		numberLettersRemaining.put('c', ScrabbleParameters.getCount('c'));
-		numberLettersRemaining.put('d', ScrabbleParameters.getCount('d'));
-		numberLettersRemaining.put('e', ScrabbleParameters.getCount('e'));
-		numberLettersRemaining.put('f', ScrabbleParameters.getCount('f'));
-		numberLettersRemaining.put('g', ScrabbleParameters.getCount('g'));
-		numberLettersRemaining.put('h', ScrabbleParameters.getCount('h'));
-		numberLettersRemaining.put('i', ScrabbleParameters.getCount('i'));
-		numberLettersRemaining.put('j', ScrabbleParameters.getCount('j'));
-		numberLettersRemaining.put('k', ScrabbleParameters.getCount('k'));
-		numberLettersRemaining.put('l', ScrabbleParameters.getCount('l'));
-		numberLettersRemaining.put('m', ScrabbleParameters.getCount('m'));
-		numberLettersRemaining.put('n', ScrabbleParameters.getCount('n'));
-		numberLettersRemaining.put('o', ScrabbleParameters.getCount('o'));
-		numberLettersRemaining.put('p', ScrabbleParameters.getCount('p'));
-		numberLettersRemaining.put('q', ScrabbleParameters.getCount('q'));
-		numberLettersRemaining.put('r', ScrabbleParameters.getCount('r'));
-		numberLettersRemaining.put('s', ScrabbleParameters.getCount('s'));
-		numberLettersRemaining.put('t', ScrabbleParameters.getCount('t'));
-		numberLettersRemaining.put('u', ScrabbleParameters.getCount('u'));
-		numberLettersRemaining.put('v', ScrabbleParameters.getCount('v'));
-		numberLettersRemaining.put('w', ScrabbleParameters.getCount('w'));
-		numberLettersRemaining.put('x', ScrabbleParameters.getCount('x'));
-		numberLettersRemaining.put('y', ScrabbleParameters.getCount('y'));
-		numberLettersRemaining.put('z', ScrabbleParameters.getCount('z'));
+		numberLettersRemaining.put('A', ScrabbleParameters.getCount('A'));
+		numberLettersRemaining.put('B', ScrabbleParameters.getCount('B'));
+		numberLettersRemaining.put('C', ScrabbleParameters.getCount('C'));
+		numberLettersRemaining.put('D', ScrabbleParameters.getCount('D'));
+		numberLettersRemaining.put('E', ScrabbleParameters.getCount('E'));
+		numberLettersRemaining.put('F', ScrabbleParameters.getCount('F'));
+		numberLettersRemaining.put('G', ScrabbleParameters.getCount('G'));
+		numberLettersRemaining.put('H', ScrabbleParameters.getCount('H'));
+		numberLettersRemaining.put('I', ScrabbleParameters.getCount('I'));
+		numberLettersRemaining.put('J', ScrabbleParameters.getCount('J'));
+		numberLettersRemaining.put('K', ScrabbleParameters.getCount('K'));
+		numberLettersRemaining.put('L', ScrabbleParameters.getCount('L'));
+		numberLettersRemaining.put('M', ScrabbleParameters.getCount('M'));
+		numberLettersRemaining.put('N', ScrabbleParameters.getCount('N'));
+		numberLettersRemaining.put('O', ScrabbleParameters.getCount('O'));
+		numberLettersRemaining.put('P', ScrabbleParameters.getCount('P'));
+		numberLettersRemaining.put('Q', ScrabbleParameters.getCount('Q'));
+		numberLettersRemaining.put('R', ScrabbleParameters.getCount('R'));
+		numberLettersRemaining.put('S', ScrabbleParameters.getCount('S'));
+		numberLettersRemaining.put('T', ScrabbleParameters.getCount('T'));
+		numberLettersRemaining.put('U', ScrabbleParameters.getCount('U'));
+		numberLettersRemaining.put('V', ScrabbleParameters.getCount('V'));
+		numberLettersRemaining.put('W', ScrabbleParameters.getCount('W'));
+		numberLettersRemaining.put('X', ScrabbleParameters.getCount('X'));
+		numberLettersRemaining.put('Y', ScrabbleParameters.getCount('Y'));
+		numberLettersRemaining.put('Z', ScrabbleParameters.getCount('Z'));
 	}
 
 	public abstract int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
