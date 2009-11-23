@@ -11,26 +11,24 @@ package seven.ui;
  */
 public class Letter {
 
-	Character alphabet;
+    Character alphabet;
     int value;
-    
     public Letter(Character c, int s)
     {
         alphabet = c;
         value = s;
     }
-    
-    public Character getAlphabet() {
+	/**
+	 * @return the alphabet
+	 */
+	public Character getAlphabet() {
 		return alphabet;
 	}
-	public void setAlphabet(Character alphabet) {
-		this.alphabet = alphabet;
-	}
+	/**
+	 * @return the value
+	 */
 	public int getValue() {
 		return value;
 	}
-	public void setValue(int value) {
-		this.value = value;
-	}
-    
+
 }

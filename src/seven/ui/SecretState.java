@@ -22,5 +22,24 @@ public class SecretState {
         secretLetters = new ArrayList<Letter>();
         score = scoreL;
     }
+	/**
+	 * @return the secretLetters
+	 */
+	public ArrayList<Letter> getSecretLetters() {
+		return secretLetters;
+	}
+	/**
+	 * @return the score
+	 */
+	public int getScore() {
+		return score;
+	}
+	/**
+	 * @return the total_letters
+	 */
+	public int getTotalLetters() {
+		return total_letters;
+	}
 
+    
 }

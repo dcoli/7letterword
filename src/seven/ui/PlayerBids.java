@@ -23,6 +23,30 @@ public class PlayerBids {
         bidvalues = new ArrayList<Integer>();
         TargetLetter = targetletter;
     }
+	/**
+	 * @return the bidvalues
+	 */
+	public ArrayList<Integer> getBidvalues() {
+		return bidvalues;
+	}
+	/**
+	 * @return the targetLetter
+	 */
+	public Letter getTargetLetter() {
+		return TargetLetter;
+	}
+	/**
+	 * @return the wonBy
+	 */
+	public String getWonBy() {
+		return wonBy;
+	}
+	/**
+	 * @return the winAmmount
+	 */
+	public int getWinAmmount() {
+		return winAmmount;
+	}
     
 
 
