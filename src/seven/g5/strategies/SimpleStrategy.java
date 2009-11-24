@@ -20,6 +20,8 @@ import seven.ui.SecretState;
 
 public class SimpleStrategy extends Strategy {
 
+	protected OurLetter currentLetter;
+	protected ArrayList<OurLetter> hand = new ArrayList<OurLetter>();
         //monal
 		private PlayerBids cpbid = null ;
         private Letter letter ;
@@ -34,8 +36,7 @@ public class SimpleStrategy extends Strategy {
 	private ArrayList<Letter> hand = new ArrayList<Letter>();
 	//initialized in the Strategy constructor
 	//protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
-	//	protected int bidpoints = 100;
-
+	
 	PriorityQueue<Word> binHeapOfCurrentWords = new PriorityQueue<Word>(1, 
 			new Comparator<Word>() {
 				 public int compare(Word a, Word b)
@@ -57,11 +58,11 @@ public class SimpleStrategy extends Strategy {
 	}
 	
 	/**
-	 *
+	 * 
 	 * @return the value of the bid to place
 	 */
 	public int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
-			int totalRounds, ArrayList<String> playerList, SecretState secretstate) {
+			int totalRounds, ArrayList<String> playerList, SecretState secretstate, int playerID) {
 
 		//get the letters we start with
 		if (currentRound++ == 0) {
@@ -254,4 +255,5 @@ class Dictionary
 //		return (float)value * probability;
 		return 0;
 	}
+
 }

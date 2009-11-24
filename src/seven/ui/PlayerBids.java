@@ -16,7 +16,7 @@ public class PlayerBids {
     ArrayList<Integer> bidvalues; // players from 0 to n-1
     Letter TargetLetter;
     String wonBy;
-    
+    int winnerID;
     int winAmmount;
     public PlayerBids(Letter targetletter) {
 

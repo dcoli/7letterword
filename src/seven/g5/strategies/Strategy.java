@@ -52,7 +52,7 @@ public abstract class Strategy {
 	}
 
 	public abstract int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
-			int totalRounds, ArrayList<String> playerList, SecretState secretstate);
+			int totalRounds, ArrayList<String> playerList, SecretState secretstate, int playerID);
 
 	public abstract String getFinalWord();
 	
