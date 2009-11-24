@@ -22,6 +22,7 @@ public class GameConfig {
     ArrayList<String> PlayerWords;
     ArrayList<Integer> lasPoints;
     Scrabble ScrabbleObject;
+    
     int gameDelay = 500;
     int number_of_rounds;
     int current_round;

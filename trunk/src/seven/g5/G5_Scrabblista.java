@@ -32,9 +32,9 @@ public class G5_Scrabblista implements Player {
 	@Override
 	public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList,
 			int totalRounds, ArrayList<String> PlayerList,
-			SecretState secretstate) {
+			SecretState secretstate, int PlayerID) {
 		// TODO Auto-generated method stub
-        return strategy.getBid(bidLetter, PlayerBidList, totalRounds, PlayerList, secretstate);
+        return strategy.getBid(bidLetter, PlayerBidList, totalRounds, PlayerList, secretstate, PlayerID);
 	}
 
 }

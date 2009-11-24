@@ -19,7 +19,7 @@ public interface Player {
 
 
 
-    public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList,int total_rounds, ArrayList<String> PlayerList, SecretState secretstate);
+    public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList,int total_rounds, ArrayList<String> PlayerList, SecretState secretstate, int PlayerID);
     
     public String returnWord();
 

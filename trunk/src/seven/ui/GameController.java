@@ -39,7 +39,7 @@ public class GameController {
             {
 
                 Player currPlayer = gc_local.PObjectList.get(loop);
-                int bidValue = currPlayer.Bid(bidLetter,gc_local.BidList,gc_local.number_of_rounds,gc_local.PlayerList,gc_local.secretstateList.get(loop));
+                int bidValue = currPlayer.Bid(bidLetter,gc_local.BidList,gc_local.number_of_rounds,gc_local.PlayerList,gc_local.secretstateList.get(loop),loop);
                 // If player is full makes his value = 0.
                 if(bidValue < 0)
                 {
@@ -233,33 +233,40 @@ public class GameController {
             bidvalarr.add(temp_bv);
         }
         Collections.sort(bidvalarr,new BidvalComparator());
+        for(Bidval bv: bidvalarr){
+        	//System.out.println(bv.bid);
+        }
         
         int gotCount = 1;
+        int winnerLoopIndex = 0;
         for(int loop=0;loop<bidvalarr.size();loop++)
         {
             if(isplayerdone.get(bidvalarr.get(loop).index) == false && gotCount == 1)
             {
                 gotCount++;
                 winnerIndex = bidvalarr.get(loop).index;
-
+                winnerLoopIndex = loop;
+                break;
             }
-            else if(gotCount == 2)
-            {
-                runnerUpIndex = bidvalarr.get(loop).index;
-                gotCount++;
-            }
+//            else if(gotCount == 2)
+//            {
+//                runnerUpIndex = bidvalarr.get(loop).index;
+//                gotCount++;
+//            }
         }
 
-        if(gotCount == 2)
-        {
-             for(int loop=0;loop<bidvalarr.size();loop++)
+//        if(gotCount == 2)
+//        {
+        	runnerUpIndex = winnerIndex;
+             for(int loop=winnerLoopIndex+ 1;loop<bidvalarr.size();loop++)
             {
-                if(isplayerdone.get(bidvalarr.get(loop).index) == true)
+                if(isplayerdone.get(bidvalarr.get(loop).index) == false)
                 {
                     runnerUpIndex = bidvalarr.get(loop).index;
+                    break;
                 }
              }
-        }
+//       }
 
         // Now we know that winnerIndex has max values, but there could be others with the same bid.
         // Lets load them up in a arraylist
@@ -278,10 +285,12 @@ public class GameController {
             // This means we need to take a random person from here as the winner
             Random rand = new Random();
             winnerIndex = winnerList.get(rand.nextInt(winnerList.size()));
-            lastBid.winAmmount = lastBid.bidvalues.get(winnerIndex);
-            lastBid.wonBy = gc_local.PlayerList.get(winnerIndex);
-
         }
+        
+        lastBid.winAmmount = lastBid.bidvalues.get(winnerIndex);
+        lastBid.wonBy = gc_local.PlayerList.get(winnerIndex);
+        lastBid.winnerID = winnerIndex;
+        lastBid.winAmmount = lastBid.bidvalues.get(runnerUpIndex);
 
         // Give the letter to Winner Index if he has less than 7 words
         SecretState winnerSS = gc_local.secretstateList.get(winnerIndex);
