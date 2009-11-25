@@ -91,7 +91,8 @@ public class SimpleStrategy extends Strategy {
 
         //get the letters we start with
         if (currentTurn++ == 0) {
-            this.hand = secretstate.getSecretLetters();
+        	for(Letter ltr:secretstate.getSecretLetters())
+        		this.hand.add(new Letter(ltr.getAlphabet(),ScrabbleParameters.getScore(ltr.getAlphabet())));
             int letterPosition=0;
             //colin removed
 //            for(Letter l: this.hand){
