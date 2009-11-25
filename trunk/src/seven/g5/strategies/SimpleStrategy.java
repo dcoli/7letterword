@@ -28,8 +28,8 @@ public class SimpleStrategy extends Strategy {
         int futureSize = 0;
         ArrayList<Letter> currentLettersToBidFor = new ArrayList<Letter>();
         ArrayList<String> ListofWords = new ArrayList<String>();
-        char[] letters = new char[10] ;
-        char[] futureWords = new char[10] ;
+        char[] letters = new char[100] ;
+        char[] futureLetters = new char[100] ;
         Dictionary sowpods = new Dictionary();
         int currentTurn = 0;
      
@@ -93,10 +93,11 @@ public class SimpleStrategy extends Strategy {
         if (currentTurn++ == 0) {
             this.hand = secretstate.getSecretLetters();
             int letterPosition=0;
-            for(Letter l: this.hand){
-            	letters[letterPosition++] = l.getAlphabet();
-            	size++;
-            }
+            //colin removed
+//            for(Letter l: this.hand){
+//            	letters[letterPosition++] = l.getAlphabet();
+//            	size++;
+//            }
             for (int i = 0; i<this.hand.size(); i++) {
                 decrementLettersRemaining(hand.get(i));
             }
@@ -200,8 +201,8 @@ public class SimpleStrategy extends Strategy {
             int[] freq = new int[26] ;
             int[] tp = new int[26] ;
             for(int i=0;i<26;++i) freq[i] = 0 ;
-            for(int i=0;i<size;++i) ++freq[letters[i]-'A'] ;
-            for(int i=0;i<size;++i) System.out.print(letters[i] + " ") ;
+            for(int i=0;i<hand.size();++i) ++freq[hand.get(i).getAlphabet()-'A'] ;
+            for(int i=0;i<hand.size();++i) System.out.print(hand.get(i).getAlphabet() + " ") ;
             //System.out.println("") ;
             for(String str : sowpods.wordlist.keySet()) if(sowpods.wordlist.get(str)){
                
@@ -258,14 +259,18 @@ public class SimpleStrategy extends Strategy {
                 for (int i=0; i<26; i++) {
                 	char c = (char)(i+'A');
                 	possibleHand.add(new Letter(c,ScrabbleParameters.getScore(c)));
-                	solveFuture(possibleHand,possibleWordsByLetter) ;
+                	solveFuture(possibleHand,possibleWordsByLetter);
+//                	if(possibleHand.size()>0 && possibleWordsByLetter.size()>0)
+//	                	for(Letter l:possibleHand) for(String w:possibleWordsByLetter.get(l)) {
+//	                		log.debug(w);
+//	                	}
                 	possibleHand.remove(possibleHand.size()-1);
                 }
                 return possibleWordsByLetter;
         }
         void solveFuture(ArrayList<Letter> hand1, HashMap<Letter, ArrayList<String>> possibleWordsByLetter)
         {
-        	ArrayList<String> wordsForLetter = new ArrayList<String>();
+        	ArrayList<String> wordsForASingleLetter = new ArrayList<String>();
             int[] freq = new int[26] ;
             int[] tp = new int[26] ;
             for(int i=0;i<26;++i) freq[i] = 0 ;
@@ -284,17 +289,20 @@ public class SimpleStrategy extends Strategy {
                 if(i < str.length()) continue ;
                 //int k = 0 ;
                 //for(;k<26;++k) if(tp[k] > freq[k]) continue ;
-                wordsForLetter.add(str);
+                log.debug("with a "+hand1.get(hand1.size()-1).getAlphabet()+" could make "+str);
+                wordsForASingleLetter.add(str);
                 //ListofWords.add(str) ;
             }
-            possibleWordsByLetter.put(hand1.get(hand1.size()-1),wordsForLetter);
+            possibleWordsByLetter.put(hand1.get(hand1.size()-1),wordsForASingleLetter);
         }
        
         public void getLetterList(Letter x){
                 char c = x.getAlphabet();
                 ++size;
                 //there's a bug here
-                letters[size-1] = c;            
+                //colin removed
+                //letters[size-1] = c;
+                hand.add(x);
                 //System.out.println("Word list: "+words);
         }
 
@@ -326,7 +334,8 @@ public class SimpleStrategy extends Strategy {
         public void getWordlist(){
                 char c = letter.getAlphabet();
                 ++size;
-                letters[size-1] = c;
+                //colin removed
+                //letters[size-1] = c;
                
         }
 
