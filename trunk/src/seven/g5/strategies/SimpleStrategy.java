@@ -21,21 +21,21 @@ import seven.ui.SecretState;
 public class SimpleStrategy extends Strategy {
 
         //monal
-		private PlayerBids cpbid = null ;
+        private PlayerBids cpbid = null ;
         private Letter letter ;
         int size = 0;
         ArrayList<String> ListofWords = new ArrayList<String>();
         char[] words = new char[10] ;
         Dictionary sowpods = new Dictionary();
         int currentRound = 0;
-      
+     
         //colin
         //private OurLetter currentLetter;
         //private ArrayList<Letter> hand = new ArrayList<Letter>();
         //initialized in the Strategy constructor
         //protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
-        
-        PriorityQueue<Word> binHeapOfCurrentWords = new PriorityQueue<Word>(1, 
+       
+        PriorityQueue<Word> binHeapOfCurrentWords = new PriorityQueue<Word>(1,
                         new Comparator<Word>() {
                                  public int compare(Word a, Word b)
                                  {
@@ -45,125 +45,121 @@ public class SimpleStrategy extends Strategy {
                                         return 1;
                                    else if (scoreB<scoreA)
                                         return -1;
-                                   else 
-                                        return 0; 
+                                   else
+                                        return 0;
                                  }
                         }
         );
-        
+       
         public SimpleStrategy () {
                 super();
         }
-        
+       
         /**
          *
          * @return the value of the bid to place
          */
-        
-        
-        
+       
+       
+       
         /**
          * @param hand the arraylist of characters currently in our hand
          * @return optimal word
          */
 
-	protected OurLetter currentLetter;
-	protected ArrayList<Letter> hand = new ArrayList<Letter>();
-      
-      
+    protected OurLetter currentLetter;
+    protected ArrayList<Letter> hand = new ArrayList<Letter>();
+  
+    /**
+     *
+     * @return the value of the bid to place
+     */
 
+    public int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
+            int totalRounds, ArrayList<String> playerList, SecretState secretstate, int playerID) {
 
-	
-	/**
-	 * 
-	 * @return the value of the bid to place
-	 */
+        //get the letters we start with
+        if (currentRound++ == 0) {
+            this.hand = secretstate.getSecretLetters();
+            for (int i = 0; i<this.hand.size(); i++) {
+                decrementLettersRemaining(hand.get(i));
+            }
+        }
 
-	public int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
-			int totalRounds, ArrayList<String> playerList, SecretState secretstate, int playerID) {
+        this.letter = bidLetter;
+       
+        //track how many of each letter remains (as far as we can tell)
+        if (this.letter != null) decrementLettersRemaining( this.letter );
 
-		//get the letters we start with
-		if (currentRound++ == 0) {
-			this.hand = secretstate.getSecretLetters();
-			for (int i = 0; i<this.hand.size(); i++) {
-				decrementLettersRemaining(hand.get(i));
-			}
-		}
+        this.playerList = playerList;
+        if( playerBidList != null && playerBidList.size() > 0 ) {
+            PlayerBids currentPlayerBids = (PlayerBids)(playerBidList.get(playerBidList.size()-1));
 
-		this.letter = bidLetter;
-		
-		//track how many of each letter remains (as far as we can tell)
-		if (this.letter != null) decrementLettersRemaining( this.letter );
+            //System.out.println(currentPlayerBids.getWonBy());
+            //System.out.println(playerBidList.get(playerBidList.size()-1).getWonBy());
+            if( (currentPlayerBids.getWonBy().equals("seven.g5.G5_Scrabblista"))){
+                //System.out.println("We won !!!");
+                this.bidpoints -= currentPlayerBids.getWinAmmount();
 
-		this.playerList = playerList;
-		if( playerBidList != null && playerBidList.size() > 0 ) {
-			PlayerBids currentPlayerBids = (PlayerBids)(playerBidList.get(playerBidList.size()-1));
+                getWordlist(currentPlayerBids.getTargetLetter());
+            }       
 
-			//System.out.println(currentPlayerBids.getWonBy());
-			//System.out.println(playerBidList.get(playerBidList.size()-1).getWonBy());
-			if( (currentPlayerBids.getWonBy().equals("seven.g5.G5_Scrabblista"))){
-				//System.out.println("We won !!!");
-				this.bidpoints -= currentPlayerBids.getWinAmmount();
-
-				getWordlist(currentPlayerBids.getTargetLetter());
-			}		
-
-			
-		}
-		   Random rand = new Random();
+           
+        }
+           Random rand = new Random();
            int val = 1+rand.nextInt(4);
            return val;
 
 
-	}
-	
-	protected void decrementLettersRemaining(Letter letter2) {
-		int oldAmount = numberLettersRemaining.get(letter2.getAlphabet());
-		numberLettersRemaining.put(letter2.getAlphabet(), --oldAmount );
-	}
+    }
+   
+    protected void decrementLettersRemaining(Letter letter2) {
+        int oldAmount = numberLettersRemaining.get(letter2.getAlphabet());
+        numberLettersRemaining.put(letter2.getAlphabet(), --oldAmount );
+    }
 
-	/**
-	 * @param hand the arraylist of characters currently in our hand
-	 * @return optimal word
-	 */
-	protected String getOptimalWordFromHand( ArrayList<Letter> hand1 ) {
-		return getBestWordOfList(getListOfFoundWords( hand1 ));
-	}
-	
-	protected String getOptimalWordFromFuture( ArrayList<Letter> hand1 ) {
-		//here add every possible permutation of characters to fill out the rest of the hand
-		//then we'll see what words we can create with those
-		//then calculate the percentage chance of getting those letters (each Word's weightedScore)
-		return null;
-	}
-	
-	protected String getBestWordOfList( ArrayList<Word> listOfFoundWords ) {
-		// TODO Auto-generated method stub
-		binHeapOfCurrentWords.clear();
-		for( Word w: listOfFoundWords ) binHeapOfCurrentWords.add(w);
-		if( binHeapOfCurrentWords.peek() != null ) return binHeapOfCurrentWords.peek().toString();
-		else return "";
-	}
+    /**
+     * @param hand the arraylist of characters currently in our hand
+     * @return optimal word
+     */
+    protected String getOptimalWordFromHand( ArrayList<Letter> hand1 ) {
+        return getBestWordOfList(getListOfFoundWords( hand1 ));
+    }
+   
+    protected String getOptimalWordFromFuture( ArrayList<Letter> hand1 ) {
+        //here add every possible permutation of characters to fill out the rest of the hand
+        //then we'll see what words we can create with those
+        //then calculate the percentage chance of getting those letters (each Word's weightedScore)
+        return null;
+    }
+   
+    protected String getBestWordOfList( ArrayList<Word> listOfFoundWords ) {
+        // TODO Auto-generated method stub
+        binHeapOfCurrentWords.clear();
+        for( Word w: listOfFoundWords ) binHeapOfCurrentWords.add(w);
+        if( binHeapOfCurrentWords.peek() != null ) return binHeapOfCurrentWords.peek().toString();
+        else return "";
+    }
 
 
-	protected ArrayList<Word> getListOfFoundWords( ArrayList<Letter> hand2 ) {
-		// TODO Auto-generated method stub
-		//this is what will call the anagram solver
-		return null;
-	}
+    protected ArrayList<Word> getListOfFoundWords( ArrayList<Letter> hand2 ) {
+        // TODO Auto-generated method stub
+        //this is what will call the anagram solver
+        return null;
+    }
 
-	/**
-	 * 
-	 * @return final word to return at the end of the round 
-	 */
-	public String getFinalWord() {
-		getListofPossibleWords();
-		ArrayList<Word> finalList = convertStringsToWords(ListofWords);
-		String bestWord = getBestWordOfList( finalList );
-		if ( bestWord != null ) return bestWord;
-		else return "";
-	}
-	
+    /**
+     *
+     * @return final word to return at the end of the round
+     */
+    public String getFinalWord() {
+        getListofPossibleWords();
+        ArrayList<Word> finalList = convertStringsToWords(ListofWords);
+        String bestWord = getBestWordOfList( finalList );
+        if ( bestWord != null ) return bestWord;
+        else return "";
+    }
+   
  
         private ArrayList<Word> convertStringsToWords( ArrayList<String> theList ) {
                 ArrayList<Word> finalList1 = new ArrayList<Word>();
@@ -172,7 +168,7 @@ public class SimpleStrategy extends Strategy {
                 }
                 return finalList1;
         }
-        
+       
         public void getListofPossibleWords(){
                 //getWordlist();
                 try{
@@ -196,63 +192,65 @@ public class SimpleStrategy extends Strategy {
         }
         void solve()
         {
-        	int[] freq = new int[26] ;
-        	int[] tp = new int[26] ;
-        	for(int i=0;i<26;++i) freq[i] = 0 ;
-        	for(int i=0;i<size;++i) ++freq[words[i]-'A'] ; 
-        	for(int i=0;i<size;++i) System.out.print(words[i] + " ") ;
-        	//System.out.println("") ;
-        	for(String str : sowpods.wordlist.keySet()) if(sowpods.wordlist.get(str)){
-        		
-        		for(int i=0;i<26;++i) tp[i] = 0 ;
-        		int i = 0 ;
-        		for(;i<str.length();++i)
-        		{
-        			char ch = str.charAt(i) ;
-        			++tp[ch-'A'] ;
-        			if(tp[ch-'A'] > freq[ch-'A']) break ;
-        		}
-        		if(i < str.length()) continue ;
-        		//int k = 0 ;
-        		//for(;k<26;++k) if(tp[k] > freq[k]) continue ;
-        		ListofWords.add(str) ;
-        	}
+            int[] freq = new int[26] ;
+            int[] tp = new int[26] ;
+            for(int i=0;i<26;++i) freq[i] = 0 ;
+            for(int i=0;i<size;++i) ++freq[words[i]-'A'] ;
+            for(int i=0;i<size;++i) System.out.print(words[i] + " ") ;
+            //System.out.println("") ;
+            for(String str : sowpods.wordlist.keySet()) if(sowpods.wordlist.get(str)){
+               
+                for(int i=0;i<26;++i) tp[i] = 0 ;
+                int i = 0 ;
+                for(;i<str.length();++i)
+                {
+                    char ch = str.charAt(i) ;
+                    ++tp[ch-'A'] ;
+                    if(tp[ch-'A'] > freq[ch-'A']) break ;
+                }
+                if(i < str.length()) continue ;
+                //int k = 0 ;
+                //for(;k<26;++k) if(tp[k] > freq[k]) continue ;
+                ListofWords.add(str) ;
+            }
         }
-        
+       
         public void getWordlist(Letter x){
-        	
+           
                 char c = x.getAlphabet();
                 ++size;
 //there's a bug here
-                words[size-1] = c;             
+                words[size-1] = c;            
                 //System.out.println("Word list: "+words);
-                
+               
         }
-public static void main( String[] args ) {
-                SimpleStrategy strat = new SimpleStrategy();
-                ArrayList<Letter> myHand = new ArrayList<Letter>();
-                
-                //ArrayList<String> myWordList = new ArrayList<String>();               
-                strat.binHeapOfCurrentWords.add(new Word("CAT"));
-                strat.binHeapOfCurrentWords.add(new Word("RAT"));
-                strat.binHeapOfCurrentWords.add(new Word("HAT"));
-                
-                while( strat.binHeapOfCurrentWords.size() > 0 ) {
-                       // System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
-                }
-        }
-	
+
+        
+//        public static void main( String[] args ) {
+//                SimpleStrategy strat = new SimpleStrategy();
+//                ArrayList<Letter> myHand = new ArrayList<Letter>();
+//               
+//                //ArrayList<String> myWordList = new ArrayList<String>();              
+//                strat.binHeapOfCurrentWords.add(new Word("CAT"));
+//                strat.binHeapOfCurrentWords.add(new Word("RAT"));
+//                strat.binHeapOfCurrentWords.add(new Word("HAT"));
+//               
+//                while( strat.binHeapOfCurrentWords.size() > 0 ) {
+//                       // System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
+//                }
+//        }
+   
 
 
         public void getWordlist(){
                 char c = letter.getAlphabet();
                 ++size;
                 words[size-1] = c;
-                
+               
         }
 
 
-	
+   
 
 class Dictionary
 {
@@ -263,7 +261,7 @@ class Dictionary
         wordlist = new Hashtable<String, Boolean>();
     }
 }
-        
+       
         /**
          * @param numberOfTurnsLeft the number of characters that are still to be drawn, a function of the number of players * 7 - number of characters dispensed so far
          * @return the value of the letter times the chance of getting it.
