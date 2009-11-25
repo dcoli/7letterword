@@ -24,7 +24,7 @@ public class DumbPlayer2 implements Player{
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int total_rounds,ArrayList<String> PlayerList, SecretState secretstate, int PlayerID) {
+    public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int total_rounds,ArrayList<String> PlayerList, SecretState secretstate,int playerID) {
         //throw new UnsupportedOperationException("Not supported yet.");
 
 //        Random rand = new Random();
