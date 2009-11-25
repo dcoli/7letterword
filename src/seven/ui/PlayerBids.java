@@ -47,6 +47,12 @@ public class PlayerBids {
 	public int getWinAmmount() {
 		return winAmmount;
 	}
+	/**
+	 * @return the winnerID
+	 */
+	public int getWinnerID() {
+		return winnerID;
+	}
     
 
 

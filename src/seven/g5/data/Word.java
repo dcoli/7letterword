@@ -31,7 +31,7 @@ public class Word {
             score += ScrabbleParameters.getScore(currChar);
 //            log.debug(currChar+"="+ScrabbleParameters.getScore(currChar));
         }
-        log.debug("score for " + string + ": " + score);
+        //log.debug("score for " + string + ": " + score);
         return score;
 	}
 
