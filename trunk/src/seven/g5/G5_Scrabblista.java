@@ -21,6 +21,7 @@ public class G5_Scrabblista implements Player {
 	}
 	
 	public void Register() {
+		
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -33,6 +34,7 @@ public class G5_Scrabblista implements Player {
 	public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList,
 			int totalRounds, ArrayList<String> PlayerList,
 			SecretState secretstate, int PlayerID) {
+		//System.out.println("IN BID") ;
 		// TODO Auto-generated method stub
         return strategy.getBid(bidLetter, PlayerBidList, totalRounds, PlayerList, secretstate, PlayerID);
 	}
