@@ -17,9 +17,9 @@ import javax.naming.spi.DirStateFactory.Result;
  */
 public class GameController {
 
- 
+
     ArrayList<Boolean> isplayerdone;
-   
+
 
     // If gameover this function will return a (-1)
     public GameResult GamePlay(GameConfig gc_local)
@@ -130,7 +130,7 @@ public class GameController {
                 gameresult.scoreList.add(score);
             }
         }
-       
+
        return gameresult;
     }
 
@@ -144,7 +144,7 @@ public class GameController {
         {
             result = false;
         }
-       
+
         return result;
     }
 
@@ -193,10 +193,10 @@ public class GameController {
                     break;
                 }
             }
-            if(wordOK == true && gc_local.ScrabbleObject.getWordScore(playerword) != -1)
+            if(wordOK && Scrabble.getWordScore(playerword) != -1)
             {
                 // Award them the points
-                int Currscore = gc_local.ScrabbleObject.getWordScore(playerword);
+                int Currscore = Scrabble.getWordScore(playerword);
                 if(playerword.length() == 7)
                 {
                     Currscore = Currscore + 50;
@@ -204,7 +204,6 @@ public class GameController {
                 //Now add this to his secretstate
                 gc_local.secretstateList.get(loop).score += Currscore;
                 gc_local.lasPoints.add(Currscore);
-
 
             }
             else
@@ -224,8 +223,8 @@ public class GameController {
         int winnerIndex,runnerUpIndex; // Let us get someone for this
         winnerIndex = 0;
         runnerUpIndex = 0;
-       
-       
+
+
         // Create an arraylist of bid,index
         ArrayList<Bidval> bidvalarr = new ArrayList<Bidval>();
         for(int loop=0;loop<lastBid.bidvalues.size();loop++)
@@ -235,9 +234,9 @@ public class GameController {
         }
         Collections.sort(bidvalarr,new BidvalComparator());
         for(Bidval bv: bidvalarr){
-                //System.out.println(bv.bid);
+        	//System.out.println(bv.bid);
         }
-       
+
         int gotCount = 1;
         int winnerLoopIndex = 0;
         for(int loop=0;loop<bidvalarr.size();loop++)
@@ -258,7 +257,7 @@ public class GameController {
 
 //        if(gotCount == 2)
 //        {
-                runnerUpIndex = winnerIndex;
+        	runnerUpIndex = winnerIndex;
              for(int loop=winnerLoopIndex+ 1;loop<bidvalarr.size();loop++)
             {
                 if(isplayerdone.get(bidvalarr.get(loop).index) == false)
@@ -287,7 +286,7 @@ public class GameController {
             Random rand = new Random();
             winnerIndex = winnerList.get(rand.nextInt(winnerList.size()));
         }
-       
+
         lastBid.winAmmount = lastBid.bidvalues.get(winnerIndex);
         lastBid.wonBy = gc_local.PlayerList.get(winnerIndex);
         lastBid.winnerID = winnerIndex;
@@ -383,4 +382,3 @@ class BidvalComparator implements Comparator
     }
 
 }
-
