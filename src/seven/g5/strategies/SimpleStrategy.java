@@ -128,14 +128,15 @@ public class SimpleStrategy extends Strategy {
         
        
         if (hand.size() < 2 &&
-        		letter.getAlphabet() == 'e' ||
-        		letter.getAlphabet() == 'a' ||
-        		letter.getAlphabet() == 'i' ||
-        		letter.getAlphabet() == 'o' ||
-        		letter.getAlphabet() == 'n' ||
-        		letter.getAlphabet() == 'r' ||
-        		letter.getAlphabet() == 't' )
-        	return 11; //bid for common letters at first
+        		letter.getAlphabet() == 'S' ||
+        		letter.getAlphabet() == 'E' ||
+        		letter.getAlphabet() == 'A' ||
+        		letter.getAlphabet() == 'I' ||
+        		letter.getAlphabet() == 'O' ||
+        		letter.getAlphabet() == 'N' ||
+        		letter.getAlphabet() == 'R' ||
+        		letter.getAlphabet() == 'T' )
+        	return 1; //bid for common letters at first
 
         //put some stuff to find ideal letters here
         currentLettersToBidFor = getBidworthyLetters();
@@ -209,14 +210,6 @@ public class SimpleStrategy extends Strategy {
         	sowpods.wordlist.clear();
         }
 
-//		private ArrayList<Word> convertStringsToWords( ArrayList<Word> theList ) {
-//                ArrayList<Word> finalList1 = new ArrayList<Word>();
-//                for (Word w: theList) {
-//                        finalList1.add( w );
-//                }
-//                return finalList1;
-//        }
-//       
         public void getListofPossibleWords(){
                 //getWordlist();
                         solveCurrentlyHeld() ;
@@ -259,7 +252,7 @@ public class SimpleStrategy extends Strategy {
 	    	log.debug("getting good letters");
 	    	HashMap<Letter,Integer> goodLetters = new HashMap<Letter,Integer>();
 	    	HashMap<Letter,ArrayList<Word>> possibleWordsWithOneMoreLetter = new HashMap<Letter,ArrayList<Word>>();
-	    	possibleWordsWithOneMoreLetter = getListofPossibleWords(possibleWordsWithOneMoreLetter);
+	    	possibleWordsWithOneMoreLetter = getListofPossibleWords(possibleWordsWithOneMoreLetter,hand);
 	    	solveCurrentlyHeld(); //get the ones we already found.
             bestFoundWord = getBestWordOfList(ListofWords);
             String oneOfTheFutureWords;
@@ -268,7 +261,7 @@ public class SimpleStrategy extends Strategy {
 		    		for(int i=0; i<possibleWordsWithOneMoreLetter.get(ltr).size(); i++) {
 		    			oneOfTheFutureWords = possibleWordsWithOneMoreLetter.get(ltr).get(i).toString();
 		    			if (lw.toString() == oneOfTheFutureWords) {
-		    				log.error("removed "+oneOfTheFutureWords);
+		    				log.debug("removed "+oneOfTheFutureWords);
 		    				possibleWordsWithOneMoreLetter.get(ltr).remove(i);
 		    			}
 		    		}
@@ -283,36 +276,18 @@ public class SimpleStrategy extends Strategy {
 	    	return goodLetters;
 	    }
            
-        public HashMap<Letter,ArrayList<Word>> getListofPossibleWords( HashMap<Letter,ArrayList<Word>> possibleWordsByLetter ){
-                //getWordlist();
-//                try{
-//                        CSVReader csvreader = new CSVReader(new FileReader("src/seven/g5/data/FilteredWords.txt"));
-//                String[] nextLine;
-//                //csvreader.readNext(); // Waste the first line
-//                while((nextLine = csvreader.readNext()) != null)
-//                {
-//                    String word = nextLine[0];
-//                    sowpods.wordlist.put(word, Boolean.TRUE);
-//                }
-//
-//                        } catch(Exception e)
-//                {
-//                    e.printStackTrace();
-//                    System.out.println("\n Could not load dictionary!");
-//                }
-                ArrayList<Letter> possibleHand = hand;
+        public HashMap<Letter,ArrayList<Word>> getListofPossibleWords( HashMap<Letter,ArrayList<Word>> possibleWordsByLetter, ArrayList<Letter> possibleHand ){
                 for (int i=0; i<26; i++) {
                 	char c = (char)(i+'A');
                 	possibleHand.add(new Letter(c,ScrabbleParameters.getScore(c)));
                 	solveFuture(possibleHand,possibleWordsByLetter);
-//                	if(possibleHand.size()>0 && possibleWordsByLetter.size()>0)
-//	                	for(Letter l:possibleHand) for(String w:possibleWordsByLetter.get(l)) {
-//	                		log.debug(w);
-//	                	}
+                	//this would be cool, but it's impossibly slow
+                	//if( possibleHand.size() <= 7 ) possibleWordsByLetter = getListofPossibleWords(possibleWordsByLetter, possibleHand);
                 	possibleHand.remove(possibleHand.size()-1);
                 }
                 return possibleWordsByLetter;
         }
+
         void solveFuture(ArrayList<Letter> hand1, HashMap<Letter, ArrayList<Word>> possibleWordsByLetter)
         {
         	ArrayList<Word> wordsForASingleLetter = new ArrayList<Word>();
