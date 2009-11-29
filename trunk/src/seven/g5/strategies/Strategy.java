@@ -19,7 +19,7 @@ public abstract class Strategy {
 
 	public Strategy( ) {
 		initializeLettersRemaining();
-		log = new Logger(LogLevel.DEBUG, this.getClass());
+		log = new Logger(LogLevel.ERROR, this.getClass());
 	}
 
 	private void initializeLettersRemaining() {
