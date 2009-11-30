@@ -1,5 +1,8 @@
 package seven.g5.strategies;
 
+import gameHolders.GameInfo;
+import gameHolders.PlayerInfo;
+
 import java.util.ArrayList;
 
 import seven.ui.Letter;
@@ -9,17 +12,15 @@ import seven.ui.SecretState;
 public class RiskyStrategy extends Strategy {
 
 	@Override
-	public int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
-			int totalRounds, ArrayList<String> playerList,
-			SecretState secretstate, int playerID) {
+	public String getFinalWord() {
 		// TODO Auto-generated method stub
-		return 0;
+		return "hi";
 	}
 
 	@Override
-	public String getFinalWord() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getBid(GameInfo gi, PlayerInfo pi) {
+		return bidpoints;
+		
 	}
 
 }

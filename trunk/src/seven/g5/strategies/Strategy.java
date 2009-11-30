@@ -1,5 +1,8 @@
 package seven.g5.strategies;
 
+import gameHolders.GameInfo;
+import gameHolders.PlayerInfo;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,8 +54,7 @@ public abstract class Strategy {
 		numberLettersRemaining.put('Z', ScrabbleParameters.getCount('Z'));
 	}
 
-	public abstract int getBid(Letter bidLetter, ArrayList<PlayerBids> playerBidList,
-			int totalRounds, ArrayList<String> playerList, SecretState secretstate, int playerID);
+	public abstract int getBid(GameInfo gi, PlayerInfo pi);
 
 	public abstract String getFinalWord();
 	
