@@ -4,7 +4,7 @@ import seven.ui.Scrabble;
 import seven.g5.Logger;
 import seven.g5.Logger.LogLevel;
 
-public class Word {
+public class Word implements Comparable<Word>{
 
 	private Logger log = new Logger(LogLevel.DEBUG, this.getClass());
 	private String string;
@@ -13,12 +13,9 @@ public class Word {
 	 */
 	private int score;
 	
-	/**
-	 * the 
-	 */
 	private float weightedScore;
 
-	public Word( String stringRepresentation ) {
+	public Word(String stringRepresentation) {
 		this.setString(stringRepresentation);
 		this.setScore(calculateScore(string));
 	}
@@ -78,5 +75,10 @@ public class Word {
 	 */
 	public String toString() {
 		return string;
+	}
+
+	@Override
+	public int compareTo(Word o) {
+		return this.calculateScore(this.string);
 	}
 }
