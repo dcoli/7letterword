@@ -119,14 +119,13 @@ public class SimpleStrategy extends Strategy {
 
 		if( gi.getPlayerBidList() != null && gi.getPlayerBidList().size() > 0 ) {
 			PlayerBids currentPlayerBids = (PlayerBids)(gi.getPlayerBidList().get(gi.getPlayerBidList().size()-1));
-			if( (currentPlayerBids.getWonBy().equals("seven.g5.G5_Scrabblista"))){
+			if( currentPlayerBids.getWinnerID() == pi.getPlayerId()){
 				//log.debug("We won a "+this.letter);
 				this.bidpoints -= currentPlayerBids.getWinAmmount();
 				//getLetterList(currentPlayerBids.getTargetLetter());
 				hand.add(letter);
 			}       
 		}
-
 
 		if (hand.size() < 2 &&
 				letter.getAlphabet() == 'S' ||
