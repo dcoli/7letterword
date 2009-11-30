@@ -33,7 +33,6 @@ public class G5_Scrabblista implements Player {
 	//dictionary handler
 	private DictionaryHandler dh;
 	
-		
 	public G5_Scrabblista() {
 		log = new Logger(LogLevel.DEBUG, this.getClass());
 		strategy = new SimpleStrategy();
