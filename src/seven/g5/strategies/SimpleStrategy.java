@@ -1,6 +1,7 @@
 package seven.g5.strategies;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,58 +17,63 @@ import seven.g5.Logger.LogLevel;
 import seven.g5.data.OurLetter;
 import seven.g5.data.ScrabbleParameters;
 import seven.g5.data.Word;
+import seven.g5.apriori_ben.*;
+import seven.g5.apriori_ben.DataMine.ItemSet;
+import seven.g5.apriori_ben.LetterMine.LetterSet;
 import seven.ui.Letter;
 import seven.ui.PlayerBids;
 import seven.ui.SecretState;
 
 public class SimpleStrategy extends Strategy {
 
-        //monal
-        private PlayerBids cpbid = null ;
-        private Letter letter ;
-        private Word bestFoundWord;
-    	//protected OurLetter currentLetter;
-        protected ArrayList<Letter> hand = new ArrayList<Letter>();
-    	private int totalTurns;
-    	private Word bestFutureWord;
-      
-        int size = 0;
-        int futureSize = 0;
-        HashMap<Letter,Integer> currentLettersToBidFor = new HashMap<Letter,Integer>();
-        ArrayList<Word> ListofWords = new ArrayList<Word>();
-        char[] letters = new char[100] ;
-        char[] futureLetters = new char[100] ;
-        Dictionary sowpods = new Dictionary();
-        int currentTurn = 0;
-     
-        PriorityQueue<Word> binHeapOfCurrentWords = new PriorityQueue<Word>(1,
-                new Comparator<Word>() {
-                         public int compare(Word a, Word b)
-                         {
-                           float scoreA = a.getScore();
-                           float scoreB = b.getScore();
-                           if (scoreB>scoreA)
-                                return 1;
-                           else if (scoreB<scoreA)
-                                return -1;
-                           else
-                                return 0;
-                         }
-                }
-        );
+	//monal
+	private PlayerBids cpbid = null ;
+	private Letter letter ;
+	private Word bestFoundWord;
+	//protected OurLetter currentLetter;
+    protected ArrayList<Letter> hand = new ArrayList<Letter>();
+	private int totalTurns;
+	private Word bestFutureWord;
+  
+    int size = 0;
+    int futureSize = 0;
+    HashMap<Letter,Integer> currentLettersToBidFor = new HashMap<Letter,Integer>();
+    ArrayList<Word> ListofWords = new ArrayList<Word>();
+    char[] letters = new char[100] ;
+    char[] futureLetters = new char[100] ;
+    Dictionary sowpods = new Dictionary();
+    int currentTurn = 0;
+ 
+//a priori stuff
+//	DataMine mine = null;
+//	ItemSet[] answer;
+		   
+    PriorityQueue<Word> binHeapOfCurrentWords = new PriorityQueue<Word>(1,
+            new Comparator<Word>() {
+                     public int compare(Word a, Word b)
+                     {
+                       float scoreA = a.getScore();
+                       float scoreB = b.getScore();
+                       if (scoreB>scoreA)
+                            return 1;
+                       else if (scoreB<scoreA)
+                            return -1;
+                       else
+                            return 0;
+                     }
+            }
+    );
 
-        //colin
-        //private OurLetter currentLetter;
-        //private ArrayList<Letter> hand = new ArrayList<Letter>();
-        //initialized in the Strategy constructor
-        //protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
+	    public SimpleStrategy () {
+            super();
+            loadDictionary();
+//a priori stuff
+//	        mine = new LetterMine("src/seven/g5/super-small-wordlist.txt");//src/seven/g5/data/FilteredWords.txt");
+//	        mine.buildIndex();
+//	        answer = mine.aPriori(0.000001);
+	}
        
-        public SimpleStrategy () {
-                super();
-                loadDictionary();
-        }
-       
-    private void loadDictionary() {
+	private void loadDictionary() {
         try{
             CSVReader csvreader = new CSVReader(new FileReader("src/seven/g5/data/FilteredWords.txt"));
 		    String[] nextLine;
@@ -102,12 +108,6 @@ public class SimpleStrategy extends Strategy {
         	for(Letter ltr:secretstate.getSecretLetters()) {
         		this.hand.add(new Letter(ltr.getAlphabet(),ScrabbleParameters.getScore(ltr.getAlphabet())));
         	}
-        		//colin removed
-//            int letterPosition=0;
-//            for(Letter l: this.hand){
-//            	letters[letterPosition++] = l.getAlphabet();
-//            	size++;
-//           }
             for (int i = 0; i<this.hand.size(); i++) {
                 decrementLettersRemainingInBag(hand.get(i));
             }
@@ -138,20 +138,68 @@ public class SimpleStrategy extends Strategy {
         		letter.getAlphabet() == 'T' )
         	return 1; //bid for common letters at first
 
-        //put some stuff to find ideal letters here
-        currentLettersToBidFor = getBidworthyLetters();
-        log.debug("letters to bid for:");
-        for (Letter c: currentLettersToBidFor.keySet()) {
-            log.debug("bid for "+c.getAlphabet()+":"+currentLettersToBidFor.get(c)+" ");
-        }
-        int returnBid = calculateBid(currentLettersToBidFor,bidLetter);
+        int returnBid;
+    	currentLettersToBidFor = getBidworthyLetters();
+    	log.debug("letters to bid for:");
+    	for (Letter c: currentLettersToBidFor.keySet()) {
+    		log.debug("bid for "+c.getAlphabet()+":"+currentLettersToBidFor.get(c)+" ");
+    	}
+    	returnBid = calculateBid(currentLettersToBidFor,bidLetter);
         return returnBid;
-//       Random rand = new Random();
-//       int val = 1+rand.nextInt(4);
-//       return val;
+
+// 	EXAMPLE USING A PRIORI
+//        int returnBid;
+//        //put some stuff to find ideal letters here
+//        if (totalTurns < 43) {
+//        	currentLettersToBidFor = getBidworthyLetters();
+//        	log.debug("letters to bid for:");
+//        	for (Letter c: currentLettersToBidFor.keySet()) {
+//        		log.debug("bid for "+c.getAlphabet()+":"+currentLettersToBidFor.get(c)+" ");
+//        	}
+//        	returnBid = calculateBid(currentLettersToBidFor,bidLetter);
+//        }
+//        else {
+//        	String[] wordPathsArray = useAPriori( hand, bidLetter );
+//        	ArrayList<Word> wordPathsList = convertStringsToWords( wordPathsArray );
+//        	bestFutureWord = getBestWordOfList( wordPathsList );
+//        	returnBid = bestFutureWord.getScore();
+//        }
+//        return returnBid;
     }
    
-    private int calculateBid(HashMap<Letter,Integer> currentLettersToBidFor2,
+	private ArrayList<Word> convertStringsToWords( String[] theList ) {
+		ArrayList<Word> finalList1 = new ArrayList<Word>();
+		for (int i=0; i<theList.length; i++) {
+			finalList1.add( new Word( theList[i] ));
+		}
+		return finalList1;
+	}
+	
+//    private String[] useAPriori(ArrayList<Letter> hand2, Letter bidLetter) {
+//    	ArrayList<Letter> possibleHand = new ArrayList<Letter>();
+//    	for (Letter ltr: hand2) possibleHand.add(ltr);
+//    	possibleHand.add(bidLetter);
+//        LetterSet i = (LetterSet) mine.getCachedItemSet( (String[])(possibleHand.toArray()) );
+//		String[] words = i.getWords();
+//        for (String w : words) {
+//            log.debug(w);
+//        }
+//        return words;
+//	}
+
+    private String makeKey(ArrayList<Letter> subkeys) {
+        if (1 == subkeys.size()) return Character.toString(subkeys.get(0).getAlphabet()); // common case short-circuit
+        String tmp[] = (String[])subkeys.toArray();
+        Arrays.sort(tmp);
+        StringBuffer b = new StringBuffer();
+        for (int i = 0; i < tmp.length; i++) {
+                if (0 < i) b.append(' ');
+                b.append(tmp[i]);
+        }
+        return b.toString();
+    }
+    
+	private int calculateBid(HashMap<Letter,Integer> currentLettersToBidFor2,
 			Letter bidLetter) {
 	        for(Letter l: currentLettersToBidFor.keySet()) {
 	        	if(l.getAlphabet() == bidLetter.getAlphabet()) {
