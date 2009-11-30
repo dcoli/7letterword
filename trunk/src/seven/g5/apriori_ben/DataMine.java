@@ -75,6 +75,7 @@ public abstract class DataMine {
 
        public ItemSet getCachedItemSet(String[] terms) {
                String lookup = makeKey(terms);
+               System.out.println("lookup "+lookup);
                return itemCache.get(lookup);
        }
 
@@ -141,6 +142,7 @@ public abstract class DataMine {
                                if (curr.getSupport() >= minsupport) {
                                        String k = curr.getKey();
                                        singletonKeys.add(curr.getKey());
+                                       logger.debug("putting "+k+","+curr);
                                        itemCache.put(k, curr);
                                }
                                else i.remove();
@@ -220,6 +222,7 @@ public abstract class DataMine {
                                }
                                ItemSet combined = baseSet.intersect(singleton, isFinal);
                                if (null != combined && combined.getSupport() >= minsupport) {
+                                   logger.debug("putting "+combined.getKey()+","+combined);
                                        itemCache.put(combined.getKey(), combined);
                                        if (roundnum != combined.getItems().length) {
                                                logger.error("Somehow got " + combined.getKey() + " from "  + baseSet.getKey() + " and " + singleton.getKey());
