@@ -16,12 +16,12 @@ public class TestSimpleStrategy extends SimpleStrategy {
 		ArrayList<OurLetter> myHand = new ArrayList<OurLetter>();
 
 		//ArrayList<String> myWordList = new ArrayList<String>();		
-		strat.binHeapOfCurrentWords.add(new Word("CAT"));
-		strat.binHeapOfCurrentWords.add(new Word("RAT"));
-		strat.binHeapOfCurrentWords.add(new Word("HAT"));
+		strat.binHeapOfWordsByValue.add(new Word("CAT"));
+		strat.binHeapOfWordsByValue.add(new Word("RAT"));
+		strat.binHeapOfWordsByValue.add(new Word("HAT"));
 				
-		while( strat.binHeapOfCurrentWords.size() > 0 ) {
-			System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
+		while( strat.binHeapOfWordsByValue.size() > 0 ) {
+			System.out.println("word "+strat.binHeapOfWordsByValue.peek()+" is "+((Word)strat.binHeapOfWordsByValue.poll()).getScore() );
 		}
 	}
 	

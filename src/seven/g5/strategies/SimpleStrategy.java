@@ -47,33 +47,9 @@ public class SimpleStrategy extends Strategy {
 	Dictionary sowpods = new Dictionary();
 	int currentTurn = 0;
 
-	//a priori stuff
-	//	DataMine mine = null;
-	//	ItemSet[] answer;
-
-	PriorityQueue<Word> binHeapOfCurrentWords = new PriorityQueue<Word>(1,
-			new Comparator<Word>() {
-		public int compare(Word a, Word b)
-		{
-			float scoreA = a.getScore();
-			float scoreB = b.getScore();
-			if (scoreB>scoreA)
-				return 1;
-			else if (scoreB<scoreA)
-				return -1;
-			else
-				return 0;
-		}
-	}
-	);
-
 	public SimpleStrategy () {
 		super();
 		loadDictionary();
-		//a priori stuff
-		//	        mine = new LetterMine("src/seven/g5/super-small-wordlist.txt");//src/seven/g5/data/FilteredWords.txt");
-		//	        mine.buildIndex();
-		//	        answer = mine.aPriori(0.000001);
 	}
 
 	private void loadDictionary() {
@@ -147,56 +123,6 @@ public class SimpleStrategy extends Strategy {
 		returnBid = calculateBid(currentLettersToBidFor,gi.getCurrentBid());
 		return returnBid;
 
-		// 	EXAMPLE USING A PRIORI
-		//        int returnBid;
-		//        //put some stuff to find ideal letters here
-		//        if (totalTurns < 43) {
-		//        	currentLettersToBidFor = getBidworthyLetters();
-		//        	log.debug("letters to bid for:");
-		//        	for (Letter c: currentLettersToBidFor.keySet()) {
-		//        		log.debug("bid for "+c.getAlphabet()+":"+currentLettersToBidFor.get(c)+" ");
-		//        	}
-		//        	returnBid = calculateBid(currentLettersToBidFor,bidLetter);
-		//        }
-		//        else {
-		//        	String[] wordPathsArray = useAPriori( hand, bidLetter );
-		//        	ArrayList<Word> wordPathsList = convertStringsToWords( wordPathsArray );
-		//        	bestFutureWord = getBestWordOfList( wordPathsList );
-		//        	returnBid = bestFutureWord.getScore();
-		//        }
-		//        return returnBid;
-	}
-
-	private ArrayList<Word> convertStringsToWords( String[] theList ) {
-		ArrayList<Word> finalList1 = new ArrayList<Word>();
-		for (int i=0; i<theList.length; i++) {
-			finalList1.add( new Word( theList[i] ));
-		}
-		return finalList1;
-	}
-
-	//    private String[] useAPriori(ArrayList<Letter> hand2, Letter bidLetter) {
-	//    	ArrayList<Letter> possibleHand = new ArrayList<Letter>();
-	//    	for (Letter ltr: hand2) possibleHand.add(ltr);
-	//    	possibleHand.add(bidLetter);
-	//        LetterSet i = (LetterSet) mine.getCachedItemSet( (String[])(possibleHand.toArray()) );
-	//		String[] words = i.getWords();
-	//        for (String w : words) {
-	//            log.debug(w);
-	//        }
-	//        return words;
-	//	}
-
-	private String makeKey(ArrayList<Letter> subkeys) {
-		if (1 == subkeys.size()) return Character.toString(subkeys.get(0).getAlphabet()); // common case short-circuit
-		String tmp[] = (String[])subkeys.toArray();
-		Arrays.sort(tmp);
-		StringBuffer b = new StringBuffer();
-		for (int i = 0; i < tmp.length; i++) {
-			if (0 < i) b.append(' ');
-			b.append(tmp[i]);
-		}
-		return b.toString();
 	}
 
 	private int calculateBid(HashMap<Letter,Integer> currentLettersToBidFor2,
@@ -207,11 +133,6 @@ public class SimpleStrategy extends Strategy {
 			}
 		}
 		return 0;
-	}
-
-	protected void decrementLettersRemainingInBag(Letter letter2) {
-		int oldAmount = numberLettersRemaining.get(letter2.getAlphabet());
-		numberLettersRemaining.put(letter2.getAlphabet(), --oldAmount );
 	}
 
 	//    /**
@@ -228,14 +149,6 @@ public class SimpleStrategy extends Strategy {
 	//        //then calculate the percentage chance of getting those letters (each Word's weightedScore)
 	//        return null;
 	//    }
-
-	protected Word getBestWordOfList( ArrayList<Word> listofWords2 ) {
-		// TODO Auto-generated method stub
-		binHeapOfCurrentWords.clear();
-		for( Word w: listofWords2 ) binHeapOfCurrentWords.add(w);
-		if( binHeapOfCurrentWords.peek() != null ) return binHeapOfCurrentWords.peek();
-		else return null;
-	}
 
 
 	//    protected ArrayList<Word> getListOfFoundWords( ArrayList<Letter> hand2 ) {
