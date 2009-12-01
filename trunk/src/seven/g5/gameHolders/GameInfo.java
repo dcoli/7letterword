@@ -27,7 +27,7 @@ public class GameInfo {
 	public void setPlayerBidList(ArrayList<PlayerBids> playerBidList) {
 		this.playerBidList = playerBidList;
 	}
-	public Letter getCurrentBid() {
+	public Letter getCurrentBidLetter() {
 		return currentBid;
 	}
 	public void setCurrentBid(Letter currentBid) {
