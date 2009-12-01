@@ -6,14 +6,14 @@ import seven.g5.gameHolders.PlayerInfo;
 public class KickOffStrategy extends Strategy {
 
 	@Override
-	public int getBid(GameInfo gi, PlayerInfo pi) {
-		// TODO Auto-generated method stub
-		return 0;
+	public String getFinalWord() {
+		return "balls";
 	}
 
 	@Override
-	public String getFinalWord() {
-		return "balls";
+	public int getBid(GameInfo gi, PlayerInfo pi) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
