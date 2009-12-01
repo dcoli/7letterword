@@ -79,6 +79,6 @@ public class Word implements Comparable<Word>{
 
 	@Override
 	public int compareTo(Word o) {
-		return this.calculateScore(this.string);
+		return this.getScore() - o.getScore();
 	}
 }
