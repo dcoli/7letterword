@@ -1,4 +1,5 @@
 package seven.g5.strategies;
+
 import seven.g5.gameHolders.GameInfo;
 import seven.g5.gameHolders.PlayerInfo;
 
