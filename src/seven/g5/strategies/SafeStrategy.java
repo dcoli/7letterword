@@ -1,13 +1,11 @@
 package seven.g5.strategies;
 
 import java.util.ArrayList;
-
+import seven.g5.gameHolders.GameInfo;
+import seven.g5.gameHolders.PlayerInfo;
 import seven.g5.DictionaryHandler;
 import seven.g5.data.Word;
 import seven.ui.Letter;
-
-import gameHolders.GameInfo;
-import gameHolders.PlayerInfo;
 
 public class SafeStrategy extends Strategy {
 

@@ -1,7 +1,5 @@
 package seven.g5;
 
-import gameHolders.GameInfo;
-import gameHolders.PlayerInfo;
 
 import java.util.ArrayList;
 
@@ -14,6 +12,8 @@ import seven.ui.Letter;
 import seven.ui.Player;
 import seven.ui.PlayerBids;
 import seven.ui.SecretState;
+import seven.g5.gameHolders.GameInfo;
+import seven.g5.gameHolders.PlayerInfo;
 
 public class G5_Scrabblista implements Player {
 

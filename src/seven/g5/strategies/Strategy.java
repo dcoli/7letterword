@@ -1,7 +1,7 @@
 package seven.g5.strategies;
 
-import gameHolders.GameInfo;
-import gameHolders.PlayerInfo;
+import seven.g5.gameHolders.GameInfo;
+import seven.g5.gameHolders.PlayerInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;

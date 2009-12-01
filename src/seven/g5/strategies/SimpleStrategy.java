@@ -1,8 +1,5 @@
 package seven.g5.strategies;
 
-import gameHolders.GameInfo;
-import gameHolders.PlayerInfo;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -20,6 +17,8 @@ import seven.g5.Logger.LogLevel;
 import seven.g5.data.OurLetter;
 import seven.g5.data.ScrabbleParameters;
 import seven.g5.data.Word;
+import seven.g5.gameHolders.GameInfo;
+import seven.g5.gameHolders.PlayerInfo;
 import seven.g5.apriori_ben.*;
 import seven.g5.apriori_ben.DataMine.ItemSet;
 import seven.g5.apriori_ben.LetterMine.LetterSet;
