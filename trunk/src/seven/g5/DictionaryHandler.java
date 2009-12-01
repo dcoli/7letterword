@@ -1,56 +1,68 @@
 package seven.g5;
 
-import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
+import java.util.PriorityQueue;
 
+import seven.g5.Logger.LogLevel;
+import seven.g5.apriori_ben.DataMine;
+import seven.g5.apriori_ben.LetterMine;
+import seven.g5.apriori_ben.DataMine.ItemSet;
+import seven.g5.apriori_ben.LetterMine.LetterSet;
 import seven.g5.data.Word;
-import seven.ui.CSVReader;
 import seven.ui.Letter;
 
 public class DictionaryHandler {
 
-	private Hashtable<String, Boolean> dictionary;
-	
-	public DictionaryHandler() {
-		this.dictionary = new Hashtable<String, Boolean>();
-		try{
-			CSVReader csvreader = new CSVReader(new FileReader("src/seven/g5/data/FilteredWords.txt"));
-			String[] nextLine;
-			//csvreader.readNext(); // Waste the first line
-			while((nextLine = csvreader.readNext()) != null)
-			{
-				String word = nextLine[0];
-				dictionary.put(word, Boolean.TRUE);
-			}
+	//a priori stuff
+	private DataMine mine = null;
+	private ItemSet[] answer;
+	private Logger log;
 
-		} catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("\n Could not load dictionary!");
+	private PriorityQueue<Word> binHeapOfWordsByValue;
+
+	public DictionaryHandler() {
+		this.binHeapOfWordsByValue = new PriorityQueue<Word>(1);
+
+		//a priori stuff
+		//this.log = new Logger(LogLevel.ERROR, this.getClass());
+		this.mine = new LetterMine("src/seven/g5/super-small-wordlist.txt");//src/seven/g5/data/FilteredWords.txt");
+		this.mine.buildIndex();
+		this.answer = mine.aPriori(0.000001);
+	}
+	
+	public String[] useAPriori(ArrayList<Letter> hand, Letter bidLetter) {
+    	ArrayList<Letter> possibleHand = new ArrayList<Letter>();
+    	for (Letter ltr: hand) possibleHand.add(ltr);
+    	possibleHand.add(bidLetter);
+        LetterSet i = (LetterSet) mine.getCachedItemSet( (String[])(possibleHand.toArray()) );
+		String[] words = i.getWords();
+        return words;
+	}
+
+	public ArrayList<Word> convertStringsToWords( String[] theList ) {
+		ArrayList<Word> finalList1 = new ArrayList<Word>();
+		for (int i=0; i<theList.length; i++) {
+			finalList1.add( new Word( theList[i] ));
 		}
+		return finalList1;
+	}
+
+	public Word getBestWordOfList( ArrayList<Word> listofWords2 ) {
+		// TODO Auto-generated method stub
+		binHeapOfWordsByValue.clear();
+		for( Word w: listofWords2 ) binHeapOfWordsByValue.add(w);
+		if( binHeapOfWordsByValue.peek() != null ) return binHeapOfWordsByValue.peek();
+		else return null;
 	}
 	
-	//this method needs to take list of letters and return a list. it will be sorted in last line by score
-	public ArrayList<Word> getPossibleWords(ArrayList<Letter> letters) {
-		ArrayList<Word> possibleWords = null;
-		
-		Collections.sort(possibleWords);
-		return possibleWords;
-	}
-	
-	public Word getBestWord(ArrayList<Letter> rack) {
-		ArrayList<Word> possibleWords = getPossibleWords(rack);
-		
-		return possibleWords.get(possibleWords.size() - 1);
-	}
-	
-	public Word getBestWordWithAddition(ArrayList<Letter> rack, Letter newLetter) {
-		ArrayList<Letter> tempRack = new ArrayList<Letter>(rack);
-		tempRack.add(newLetter);
-		
-		return getBestWord(tempRack);
-	}
+	// 	EXAMPLE USING A PRIORI - NOTE THAT THE BIDDING STRATEGY IS TERRIBLE THOUGH
+	//        int returnBid;
+	//        //put some stuff to find ideal letters here
+	//        if (totalTurns > 42) {
+	//        	String[] wordPathsArray = useAPriori( hand, bidLetter );
+	//        	ArrayList<Word> wordPathsList = convertStringsToWords( wordPathsArray );
+	//        	bestFutureWord = getBestWordOfList( wordPathsList );
+	//        	returnBid = bestFutureWord.getScore();
+	//        }
+	//        return returnBid;
 }
