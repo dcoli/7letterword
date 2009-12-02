@@ -56,9 +56,7 @@ public class G5_Scrabblista implements Player {
 	public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int totalRounds, ArrayList<String> PlayerList, SecretState secretstate, int PlayerID) {
 		this.roundNum++;
 		decrementLettersRemainingInBag(bidLetter); 
-		if(PlayerBidList.get(PlayerBidList.size()-1).getWonBy().equals(null)){
-			
-		}	
+		
 		//get the letters we start with
 		if (this.roundNum == 0) {
 			noOfTurnsRemaining = PlayerList.size() * 7;
