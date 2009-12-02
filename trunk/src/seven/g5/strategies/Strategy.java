@@ -15,13 +15,13 @@ import java.util.*;
 
 public abstract class Strategy {
 	
-	protected Logger log;
+	//protected Logger log;
 //	protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
 //	protected int bidpoints = 100;
 //	protected ArrayList<String> playerList;
 	//a priori stuff
-	DataMine mine = null;
-	ItemSet[] answer;
+//	DataMine mine = null;
+//	ItemSet[] answer;
 
 //	PriorityQueue<Word> binHeapOfWordsByValue = new PriorityQueue<Word>(1,
 //			new Comparator<Word>() {
@@ -40,7 +40,7 @@ public abstract class Strategy {
 //	);
 
 	public Strategy( ) {
-		log = new Logger(LogLevel.DEBUG,this.getClass());
+		//log = new Logger(LogLevel.DEBUG,this.getClass());
 	}
 
 //	protected String[] useAPriori(ArrayList<Letter> hand, Letter bidLetter) {
@@ -131,8 +131,16 @@ public abstract class Strategy {
 
 	public abstract int getBid(GameInfo gi, PlayerInfo pi);
 
-	public abstract String getFinalWord();
-	
-	
+	public String getFinalWord(GameInfo gi, PlayerInfo pi) {
+		System.out.println("All Words In End!");
+		
+		ArrayList<Word> endW = pi.getDictionaryHandler().pastAnagram(pi.getRack());
+		
+		for(Word w : endW) {
+			System.out.println(w.toString() + " - " + w.getScore());
+		}
+		
+		return pi.getDictionaryHandler().getBestWordOfList(pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
+	}
 
 }
