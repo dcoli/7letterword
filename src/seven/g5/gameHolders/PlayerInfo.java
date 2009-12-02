@@ -19,6 +19,14 @@ public class PlayerInfo {
 		this.dictionaryHandler = dh;
 	}
 	
+	public String rackString() {
+		String rs = "";
+		for(Letter l : this.rack) {
+			rs += l.getAlphabet() + ", ";
+		}
+		return rs;
+	}
+	
 	public ArrayList<Letter> getRack() {
 		return rack;
 	}

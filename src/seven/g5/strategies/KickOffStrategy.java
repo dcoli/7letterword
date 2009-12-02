@@ -14,8 +14,8 @@ public class KickOffStrategy extends Strategy {
 	@Override
 	public int getBid(GameInfo gi, PlayerInfo pi) {
 		if ( pi.getRack().size() == 0 || pi.getRack().size() == 1 ) {
-			if( 	(Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi) < .20f) &&
-					(Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi) > .05f)) {
+			if((Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi) < .20f) &&
+				(Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi) > .05f)) {
 				return gi.getCurrentBidLetter().getValue();
 			}
 		}
