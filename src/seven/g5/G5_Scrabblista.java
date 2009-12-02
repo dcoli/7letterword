@@ -55,7 +55,7 @@ public class G5_Scrabblista implements Player {
 	@Override
 	public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int totalRounds, ArrayList<String> PlayerList, SecretState secretstate, int PlayerID) {
 		this.roundNum++;
-		decrementLettersRemainingInBag(bidLetter); 
+		 
 		
 		//get the letters we start with
 		if (this.roundNum == 0) {
@@ -64,7 +64,7 @@ public class G5_Scrabblista implements Player {
 				this.myRack.add(new Letter(ltr.getAlphabet(),ScrabbleParameters.getScore(ltr.getAlphabet())));
 			}
 		}
-		
+		decrementLettersRemainingInBag(bidLetter);
 		//fill person info
 		PlayerInfo pi = new PlayerInfo(this.myRack, PlayerID, this.dh);
 

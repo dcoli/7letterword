@@ -10,7 +10,7 @@ public class Utilities {
 		float p = 0;
 		int turns = gi.getNoOfTurnsRemaining();
 		for(int i=0;i<=turns;i++)
-		p+= gi.getNumberLettersRemaining().get(letter1.getAlphabet())/(98-i);
+		p+= (float)gi.getNumberLettersRemaining().get(letter1.getAlphabet())/(float)(98-i);
 		return p;
 	}
 }
