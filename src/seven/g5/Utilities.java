@@ -9,8 +9,10 @@ public class Utilities {
 	{
 		float p = 0;
 		int turns = gi.getNoOfTurnsRemaining();
-		for(int i=0;i<=turns;i++)
-		p+= (float)gi.getNumberLettersRemaining().get(letter1.getAlphabet())/(float)(98-i);
+		for(int i=0;i<=turns;i++) {
+			System.out.println((float)gi.getNumberLettersRemaining().get(letter1.getAlphabet()));
+			p+= (float)gi.getNumberLettersRemaining().get(letter1.getAlphabet())/(float)(98-i);
+		}
 		return p;
 	}
 }
