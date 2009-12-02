@@ -29,16 +29,17 @@ public class G5_Scrabblista implements Player {
 
 	//bidding info
 	private int totalPoints = 100;
-	private HashMap<Character, Integer> numberLettersRemaining;
+	private HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
 	private int noOfTurnsRemaining;
 	//dictionary handler
-	public static DictionaryHandler dh = new DictionaryHandler();
+	private DictionaryHandler dh;
 	
 	
 	public G5_Scrabblista() {
 		this.log = new Logger(LogLevel.ERROR, this.getClass());
 		this.strategy = new KickOffStrategy();
 		this.myRack = new ArrayList<Letter>();
+		this.dh = new DictionaryHandler();
 		initializeLettersRemaining();
 	}
 
@@ -54,17 +55,15 @@ public class G5_Scrabblista implements Player {
 
 	@Override
 	public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int totalRounds, ArrayList<String> PlayerList, SecretState secretstate, int PlayerID) {
-		this.roundNum++;
-		 
-		
-		//get the letters we start with
+				//get the letters we start with
 		if (this.roundNum == 0) {
-			noOfTurnsRemaining = PlayerList.size() * 7;
+			noOfTurnsRemaining =  PlayerList.size() * 7;
 			for(Letter ltr : secretstate.getSecretLetters()) {
 				this.myRack.add(new Letter(ltr.getAlphabet(),ScrabbleParameters.getScore(ltr.getAlphabet())));
 			}
 		}
-		decrementLettersRemainingInBag(bidLetter);
+		this.roundNum++;
+		
 		//fill person info
 		PlayerInfo pi = new PlayerInfo(this.myRack, PlayerID, this.dh);
 
@@ -80,6 +79,7 @@ public class G5_Scrabblista implements Player {
 			}			
 		}
 		
+		decrementLettersRemainingInBag(bidLetter); 
 		return strategy.getBid(gi, pi);
 	}
 
