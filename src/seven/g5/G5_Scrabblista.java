@@ -39,7 +39,6 @@ public class G5_Scrabblista implements Player {
 		this.log = new Logger(LogLevel.ERROR, this.getClass());
 		this.strategy = new KickOffStrategy();
 		this.myRack = new ArrayList<Letter>();
-		this.setNumberLettersRemaining(new HashMap<Character, Integer>());
 		initializeLettersRemaining();
 	}
 
@@ -58,11 +57,11 @@ public class G5_Scrabblista implements Player {
 		this.roundNum++;
 		decrementLettersRemainingInBag(bidLetter); 
 		if(PlayerBidList.get(PlayerBidList.size()-1).getWonBy().equals(null)){
-			setNoOfTurnsRemaining(getNoOfTurns(PlayerList));
+			
 		}	
 		//get the letters we start with
 		if (this.roundNum == 0) {
-			this.totalRounds = PlayerList.size() * 7;
+			noOfTurnsRemaining = PlayerList.size() * 7;
 			for(Letter ltr : secretstate.getSecretLetters()) {
 				this.myRack.add(new Letter(ltr.getAlphabet(),ScrabbleParameters.getScore(ltr.getAlphabet())));
 			}
@@ -90,7 +89,7 @@ public class G5_Scrabblista implements Player {
 	protected void decrementLettersRemainingInBag(Letter letter2) {
 		int oldAmount = getNumberLettersRemaining().get(letter2.getAlphabet());
 		getNumberLettersRemaining().put(letter2.getAlphabet(), --oldAmount );
-		setNoOfTurnsRemaining(getNoOfTurnsRemaining() - 1);
+		--noOfTurnsRemaining;
 	}
 
 	private void initializeLettersRemaining() {
@@ -121,30 +120,9 @@ public class G5_Scrabblista implements Player {
 		getNumberLettersRemaining().put('Y', ScrabbleParameters.getCount('Y'));
 		getNumberLettersRemaining().put('Z', ScrabbleParameters.getCount('Z'));
 	}
-	public int getNoOfTurns(ArrayList<String> PlayerList){
-		int noOfPlayers = PlayerList.size();
-		return noOfPlayers*7;
-	} 
 	
-	public int getProbabilityOfLetter(Letter letter1)	
-	{
-		return getNumberLettersRemaining().get(letter1.getAlphabet())/getNoOfTurnsRemaining();		
-	}
-
-	public void setNumberLettersRemaining(HashMap<Character, Integer> numberLettersRemaining) {
-		this.numberLettersRemaining = numberLettersRemaining;
-	}
-
 	public HashMap<Character, Integer> getNumberLettersRemaining() {
 		return numberLettersRemaining;
-	}
-
-	public void setNoOfTurnsRemaining(int noOfTurnsRemaining) {
-		this.noOfTurnsRemaining = noOfTurnsRemaining;
-	}
-
-	public int getNoOfTurnsRemaining() {
-		return noOfTurnsRemaining;
 	}
 
 }
