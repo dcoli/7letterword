@@ -11,7 +11,8 @@ public class ScaledStrategy extends Strategy {
 
 	@Override
 	public int getBid(GameInfo gi, PlayerInfo pi) {
-		// TODO Auto-generated method stub
+		int numLettersToLookAhead = gi.getPlayerList().size();
+		if( numLettersToLookAhead > 7 ) numLettersToLookAhead = 7;
 		return 0;
 	}
 
