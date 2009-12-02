@@ -23,43 +23,35 @@ public abstract class Strategy {
 	DataMine mine = null;
 	ItemSet[] answer;
 
-	PriorityQueue<Word> binHeapOfWordsByValue = new PriorityQueue<Word>(1,
-			new Comparator<Word>() {
-		public int compare(Word a, Word b)
-		{
-			float scoreA = a.getScore();
-			float scoreB = b.getScore();
-			if (scoreB>scoreA)
-				return 1;
-			else if (scoreB<scoreA)
-				return -1;
-			else
-				return 0;
-		}
-	}
-	);
+//	PriorityQueue<Word> binHeapOfWordsByValue = new PriorityQueue<Word>(1,
+//			new Comparator<Word>() {
+//		public int compare(Word a, Word b)
+//		{
+//			float scoreA = a.getScore();
+//			float scoreB = b.getScore();
+//			if (scoreB>scoreA)
+//				return 1;
+//			else if (scoreB<scoreA)
+//				return -1;
+//			else
+//				return 0;
+//		}
+//	}
+//	);
 
-	public Strategy( ) {
-//		initializeLettersRemaining();
-		log = new Logger(LogLevel.DEBUG, this.getClass());
-		//a priori stuff
-		mine = new LetterMine("src/seven/g5/super-small-wordlist.txt");//src/seven/g5/data/FilteredWords.txt");
-		log.debug("building a priori index");
-		mine.buildIndex();
-		answer = mine.aPriori(0.000001);
-	}
+	public Strategy( ) {}
 
-	protected String[] useAPriori(ArrayList<Letter> hand, Letter bidLetter) {
-    	ArrayList<Letter> possibleHand = new ArrayList<Letter>();
-    	for (Letter ltr: hand) possibleHand.add(ltr);
-    	possibleHand.add(bidLetter);
-        LetterSet i = (LetterSet) mine.getCachedItemSet( (String[])(possibleHand.toArray()) );
-		String[] words = i.getWords();
-		//        for (String w : words) {
-		//            log.debug(w);
-		//        }
-        return words;
-	}
+//	protected String[] useAPriori(ArrayList<Letter> hand, Letter bidLetter) {
+//    	ArrayList<Letter> possibleHand = new ArrayList<Letter>();
+//    	for (Letter ltr: hand) possibleHand.add(ltr);
+//    	possibleHand.add(bidLetter);
+//        LetterSet i = (LetterSet) mine.getCachedItemSet( (String[])(possibleHand.toArray()) );
+//		String[] words = i.getWords();
+//		//        for (String w : words) {
+//		//            log.debug(w);
+//		//        }
+//        return words;
+//	}
 
 //	// 	EXAMPLE USING A PRIORI - NOTE THAT THE BIDDING STRATEGY IS TERRIBLE THOUGH
 //	//        int returnBid;
@@ -72,14 +64,14 @@ public abstract class Strategy {
 //	//        }
 //	//        return returnBid;
 //
-
-	protected ArrayList<Word> convertStringsToWords( String[] theList ) {
-		ArrayList<Word> finalList1 = new ArrayList<Word>();
-		for (int i=0; i<theList.length; i++) {
-			finalList1.add( new Word( theList[i] ));
-		}
-		return finalList1;
-	}
+//
+//	protected ArrayList<Word> convertStringsToWords( String[] theList ) {
+//		ArrayList<Word> finalList1 = new ArrayList<Word>();
+//		for (int i=0; i<theList.length; i++) {
+//			finalList1.add( new Word( theList[i] ));
+//		}
+//		return finalList1;
+//	}
 
 //	private String makeKey(ArrayList<Letter> subkeys) {
 //		if (1 == subkeys.size()) return Character.toString(subkeys.get(0).getAlphabet()); // common case short-circuit
@@ -93,13 +85,13 @@ public abstract class Strategy {
 //		return b.toString();
 //	}
 //
-	protected Word getBestWordOfList( ArrayList<Word> listofWords2 ) {
-		// TODO Auto-generated method stub
-		binHeapOfWordsByValue.clear();
-		for( Word w: listofWords2 ) binHeapOfWordsByValue.add(w);
-		if( binHeapOfWordsByValue.peek() != null ) return binHeapOfWordsByValue.peek();
-		else return null;
-	}
+//	protected Word getBestWordOfList( ArrayList<Word> listofWords2 ) {
+//		// TODO Auto-generated method stub
+//		binHeapOfWordsByValue.clear();
+//		for( Word w: listofWords2 ) binHeapOfWordsByValue.add(w);
+//		if( binHeapOfWordsByValue.peek() != null ) return binHeapOfWordsByValue.peek();
+//		else return null;
+//	}
 
 //	protected void decrementLettersRemainingInBag(Letter letter2) {
 //		int oldAmount = numberLettersRemaining.get(letter2.getAlphabet());

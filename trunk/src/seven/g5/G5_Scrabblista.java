@@ -32,14 +32,13 @@ public class G5_Scrabblista implements Player {
 	private HashMap<Character, Integer> numberLettersRemaining;
 	private int noOfTurnsRemaining;
 	//dictionary handler
-	private DictionaryHandler dh;
+	public static DictionaryHandler dh = new DictionaryHandler();
 	
 	
 	public G5_Scrabblista() {
 		this.log = new Logger(LogLevel.ERROR, this.getClass());
 		this.strategy = new KickOffStrategy();
 		this.myRack = new ArrayList<Letter>();
-		this.dh = new DictionaryHandler();
 		this.setNumberLettersRemaining(new HashMap<Character, Integer>());
 		initializeLettersRemaining();
 	}
