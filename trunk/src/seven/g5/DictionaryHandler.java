@@ -37,7 +37,7 @@ public class DictionaryHandler {
         return convertStringsToWords(words);
 	}
 
-	public ArrayList<Word> convertStringsToWords( String[] theList ) {
+	public ArrayList<Word> convertStringsToWords(String[] theList) {
 		ArrayList<Word> finalList1 = new ArrayList<Word>();
 		for (int i=0; i<theList.length; i++) {
 			finalList1.add( new Word( theList[i] ));
@@ -45,12 +45,21 @@ public class DictionaryHandler {
 		return finalList1;
 	}
 
-	public Word getBestWordOfList( ArrayList<Word> listofWords2 ) {
+	public Word getBestWordOfList(ArrayList<Word> listofWords2) {
 		// TODO Auto-generated method stub
 		binHeapOfWordsByValue.clear();
 		for( Word w: listofWords2 ) binHeapOfWordsByValue.add(w);
 		if( binHeapOfWordsByValue.peek() != null ) return binHeapOfWordsByValue.peek();
 		else return null;
+	}
+	
+	public ArrayList<Word> anagramByLength(ArrayList<Letter> rack, int length) {
+		ArrayList<Word> tempAnagrams = useAPriori(rack);
+		for(Word w : tempAnagrams) {
+			if(w.toString().length() > length) tempAnagrams.remove(w);
+		}
+		
+		return tempAnagrams;
 	}
 	
 	// 	EXAMPLE USING A PRIORI - NOTE THAT THE BIDDING STRATEGY IS TERRIBLE THOUGH
