@@ -7,7 +7,7 @@ public class KickOffStrategy extends Strategy {
 
 	@Override
 	public String getFinalWord() {
-		return "balls";
+		return "";
 	}
 
 	@Override

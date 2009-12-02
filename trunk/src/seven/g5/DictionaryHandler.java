@@ -30,13 +30,11 @@ public class DictionaryHandler {
 		this.answer = mine.aPriori(0.000001);
 	}
 	
-	public String[] useAPriori(ArrayList<Letter> hand, Letter bidLetter) {
-    	ArrayList<Letter> possibleHand = new ArrayList<Letter>();
-    	for (Letter ltr: hand) possibleHand.add(ltr);
-    	possibleHand.add(bidLetter);
+	public ArrayList<Word> useAPriori(ArrayList<Letter> hand) {
+    	ArrayList<Letter> possibleHand = new ArrayList<Letter>(hand);
         LetterSet i = (LetterSet) mine.getCachedItemSet( (String[])(possibleHand.toArray()) );
 		String[] words = i.getWords();
-        return words;
+        return convertStringsToWords(words);
 	}
 
 	public ArrayList<Word> convertStringsToWords( String[] theList ) {

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import seven.g5.Logger.LogLevel;
 import seven.g5.data.ScrabbleParameters;
 import seven.g5.strategies.KickOffStrategy;
-import seven.g5.strategies.SevenLetterStrategy;
 import seven.g5.strategies.Strategy;
 import seven.ui.Letter;
 import seven.ui.Player;
@@ -37,7 +36,7 @@ public class G5_Scrabblista implements Player {
 
 	public G5_Scrabblista() {
 		this.log = new Logger(LogLevel.ERROR, this.getClass());
-		this.strategy = new SevenLetterStrategy();
+		this.strategy = new KickOffStrategy();
 		this.myRack = new ArrayList<Letter>();
 		this.dh = new DictionaryHandler();
 		this.numberLettersRemaining =  new HashMap<Character, Integer>();
