@@ -39,7 +39,9 @@ public abstract class Strategy {
 //	}
 //	);
 
-	public Strategy( ) {}
+	public Strategy( ) {
+		log = new Logger(LogLevel.DEBUG,this.getClass());
+	}
 
 //	protected String[] useAPriori(ArrayList<Letter> hand, Letter bidLetter) {
 //    	ArrayList<Letter> possibleHand = new ArrayList<Letter>();

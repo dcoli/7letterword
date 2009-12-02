@@ -14,7 +14,7 @@ public class KickOffStrategy extends Strategy {
 	@Override
 	public int getBid(GameInfo gi, PlayerInfo pi) {
 		if ( pi.getRack().size() == 0 || pi.getRack().size() == 1 ) {
-			//log.debug(Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi));
+			System.out.println(gi.getCurrentBidLetter()+" "+Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi));
 			if((Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi) <= 
 					(6.0f/98.0f)*(float)gi.getNoOfTurnsRemaining() &&
 				(Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi) >=
