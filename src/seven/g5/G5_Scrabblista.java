@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import seven.g5.Logger.LogLevel;
 import seven.g5.data.ScrabbleParameters;
+import seven.g5.strategies.EmpiricalFrameworkStrategy;
 import seven.g5.strategies.KickOffStrategy;
 import seven.g5.strategies.Strategy;
 import seven.ui.Letter;
@@ -31,8 +32,13 @@ public class G5_Scrabblista implements Player {
 	private int totalPoints = 100;
 	private HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
 	private int noOfTurnsRemaining;
+	
 	//dictionary handler
 	private DictionaryHandler dh;
+	
+	//info holder
+	PlayerInfo pi;
+	GameInfo gi;
 	
 	
 	public G5_Scrabblista() {
@@ -50,13 +56,13 @@ public class G5_Scrabblista implements Player {
 
 	public String returnWord() {
 		//throw new UnsupportedOperationException("Not supported yet.");
-		return strategy.getFinalWord();
+		return strategy.getFinalWord(this.gi, this.pi);
 	}
 
 	@Override
 	public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int totalRounds, ArrayList<String> PlayerList, SecretState secretstate, int PlayerID) {
 				//get the letters we start with
-		if (this.roundNum == 0) {
+		if(this.roundNum == 0) {
 			noOfTurnsRemaining =  PlayerList.size() * 7;
 			for(Letter ltr : secretstate.getSecretLetters()) {
 				this.myRack.add(new Letter(ltr.getAlphabet(),ScrabbleParameters.getScore(ltr.getAlphabet())));
@@ -65,22 +71,26 @@ public class G5_Scrabblista implements Player {
 		this.roundNum++;
 		
 		//fill person info
-		PlayerInfo pi = new PlayerInfo(this.myRack, PlayerID, this.dh);
+		this.pi = new PlayerInfo(this.myRack, PlayerID, this.dh);
 
 		//fill gameInfo
-		GameInfo gi = new GameInfo(PlayerBidList, bidLetter, this.totalRounds, secretstate, PlayerList, noOfTurnsRemaining, numberLettersRemaining);
+		this.gi = new GameInfo(PlayerBidList, bidLetter, this.totalRounds, secretstate, PlayerList, noOfTurnsRemaining, numberLettersRemaining);
 		
 		//get results from last round
 		if(PlayerBidList != null && PlayerBidList.size() > 0 ) {
 			PlayerBids currentPlayerBids = (PlayerBids)(PlayerBidList.get(PlayerBidList.size()-1));
-			if( currentPlayerBids.getWinnerID() == pi.getPlayerId()){
+			if( currentPlayerBids.getWinnerID() == this.pi.getPlayerId()){
 				this.totalPoints -= currentPlayerBids.getWinAmmount();
 				this.myRack.add(currentPlayerBids.getTargetLetter());
 			}			
 		}
 		
+		if(pi.getRack().size() >= 2) {
+			this.strategy = new EmpiricalFrameworkStrategy();
+		}
+		
 		decrementLettersRemainingInBag(bidLetter); 
-		return strategy.getBid(gi, pi);
+		return strategy.getBid(this.gi, this.pi);
 	}
 
 	//this is stuff regarding probability and tiles remaining

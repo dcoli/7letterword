@@ -6,9 +6,10 @@ import seven.g5.Utilities;
 
 public class KickOffStrategy extends Strategy {
 
-	@Override
-	public String getFinalWord() {
-		return "";
+
+	public KickOffStrategy() {
+		super();
+		System.out.println("Switching to KickOff Strategy! Pow!");
 	}
 
 	@Override

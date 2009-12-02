@@ -39,6 +39,9 @@ public class DictionaryHandler {
 	}
 	
 	public ArrayList<Word> futureAnagram(List<Letter> hand) {
+		System.out.println("Future!");
+		Utilities.printLetters(hand);
+		
 		if(hand.size() == 0) {
 			return new ArrayList<Word>(0);
 		} else {
@@ -48,6 +51,11 @@ public class DictionaryHandler {
 				stringLetters[i] = possibleHand.get(i).getAlphabet().toString();
 			}
 			LetterSet i = (LetterSet) mine.getCachedItemSet(stringLetters);
+			
+			if(i == null) {
+				return new ArrayList<Word>(0);
+			}
+			
 			String[] words = i.getWords();
         	return convertStringsToWords(words);
 		}
