@@ -9,8 +9,7 @@ public class PlayerInfo {
 
 	private ArrayList<Letter> rack;
 	private int playerId;
-	private DictionaryHandler dictionaryHandler;
-	private 
+	private DictionaryHandler dictionaryHandler; 
 	
 	public PlayerInfo() {}
 	
