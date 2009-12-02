@@ -23,18 +23,18 @@ public class KickOffStrategy extends Strategy {
 				return gi.getCurrentBidLetter().getValue();
 			}
 		}
-//		if ( pi.getRack().size() == 1 /*|| pi.getRack().size() == 1*/ ) {
-//			//System.out.println(gi.getCurrentBidLetter()+" "+Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi));
-//			if (
-//			gi.getCurrentBidLetter().getAlphabet() == 'E' ||
-//			gi.getCurrentBidLetter().getAlphabet() == 'A' ||
-//			gi.getCurrentBidLetter().getAlphabet() == 'I' ||
-//			gi.getCurrentBidLetter().getAlphabet() == 'O' ||
-//			gi.getCurrentBidLetter().getAlphabet() == 'N' ||
-//			gi.getCurrentBidLetter().getAlphabet() == 'R' ||
-//			gi.getCurrentBidLetter().getAlphabet() == 'T' )
-//				return (gi.getCurrentBidLetter().getValue() + 1); //bid for common letters at first
-//		}
+		if ( pi.getRack().size() == 1 /*|| pi.getRack().size() == 1*/ ) {
+			//System.out.println(gi.getCurrentBidLetter()+" "+Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi));
+			if (
+			gi.getCurrentBidLetter().getAlphabet() == 'E' ||
+			gi.getCurrentBidLetter().getAlphabet() == 'A' ||
+			gi.getCurrentBidLetter().getAlphabet() == 'I' ||
+			gi.getCurrentBidLetter().getAlphabet() == 'O' ||
+			gi.getCurrentBidLetter().getAlphabet() == 'N' ||
+			gi.getCurrentBidLetter().getAlphabet() == 'R' ||
+			gi.getCurrentBidLetter().getAlphabet() == 'T' )
+				return (20); //bid for common letters at first
+		}
 		return 0;
 	}
 }
