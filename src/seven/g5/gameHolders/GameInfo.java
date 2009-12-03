@@ -36,7 +36,7 @@ public class GameInfo {
 	public Letter getCurrentBidLetter() {
 		return currentBidLetter;
 	}
-	public void setCurrentBid(Letter currentBid) {
+	public void setCurrentBidLetter(Letter currentBid) {
 		this.currentBidLetter = currentBid;
 	}
 	public int getNumRounds() {
