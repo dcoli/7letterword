@@ -18,13 +18,20 @@ import seven.ui.Letter;
 public class DictionaryHandler {
 
 	//a priori stuff
-	private DataMine mine = null;
+	private static DataMine mine = null;
 	private ItemSet[] answer;
 	private Logger log;
 	
 	//pastAnagram stuff
 	HashSet<String> wordlist = new HashSet<String>();
 
+	public HashSet<String> getWordlist() {
+		return wordlist;
+	}
+
+	public void setWordlist(HashSet<String> wordlist) {
+		this.wordlist = wordlist;
+	}
 
 	//futureAnagram stuff
 	private PriorityQueue<Word> binHeapOfWordsByValue;

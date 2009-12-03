@@ -50,13 +50,18 @@ public class G5_Scrabblista implements Player {
 	}
 
 	public void Register() {
-
 		//throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	public String returnWord() {
-		//throw new UnsupportedOperationException("Not supported yet.");
-		return strategy.getFinalWord(this.gi, this.pi);
+		String finalWord = strategy.getFinalWord(this.gi, this.pi);
+		this.roundNum = 0;
+		myRack.clear();
+		pi.setRack(myRack);
+		gi.setPlayerBidList(null);
+		gi.setCurrentBidLetter(null);
+		initializeLettersRemaining();
+		return finalWord;
 	}
 
 	@Override
