@@ -15,7 +15,7 @@ import java.util.*;
 
 public abstract class Strategy {
 	
-	//protected Logger log;
+	protected static Logger log;
 //	protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
 //	protected int bidpoints = 100;
 //	protected ArrayList<String> playerList;
@@ -40,7 +40,7 @@ public abstract class Strategy {
 //	);
 
 	public Strategy( ) {
-		//log = new Logger(LogLevel.DEBUG,this.getClass());
+		log = new Logger(LogLevel.DEBUG,this.getClass());
 	}
 
 //	protected String[] useAPriori(ArrayList<Letter> hand, Letter bidLetter) {
@@ -132,13 +132,15 @@ public abstract class Strategy {
 	public abstract int getBid(GameInfo gi, PlayerInfo pi);
 
 	public String getFinalWord(GameInfo gi, PlayerInfo pi) {
-		System.out.println("All Words In End!");
+		log.debug("All Words In End!");
 		
 		ArrayList<Word> endW = pi.getDictionaryHandler().pastAnagram(pi.getRack());
 		
 		for(Word w : endW) {
 			System.out.println(w.toString() + " - " + w.getScore());
 		}
+		
+		log.debug("rack="+pi.getRack().toString());//pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
 		
 		return pi.getDictionaryHandler().getBestWordOfList(pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
 	}

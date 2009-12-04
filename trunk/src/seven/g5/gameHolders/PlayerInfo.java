@@ -8,6 +8,7 @@ import seven.ui.Letter;
 public class PlayerInfo {
 
 	private ArrayList<Letter> rack;
+	private ArrayList<Letter> lettersToTarget;
 	private int playerId;
 	private DictionaryHandler dictionaryHandler; 
 	
@@ -17,6 +18,7 @@ public class PlayerInfo {
 		this.rack = rack;
 		this.playerId = playerId;
 		this.dictionaryHandler = dh;
+		this.lettersToTarget = new ArrayList<Letter>();
 	}
 	
 	public String rackString() {
@@ -46,5 +48,13 @@ public class PlayerInfo {
 
 	public void setDictionaryHandler(DictionaryHandler dictionaryHandler) {
 		this.dictionaryHandler = dictionaryHandler;
+	}
+
+	public ArrayList<Letter> getLettersToTarget() {
+		return lettersToTarget;
+	}
+
+	public void setLettersToTarget(ArrayList<Letter> lettersToTarget) {
+		this.lettersToTarget = lettersToTarget;
 	}
 }

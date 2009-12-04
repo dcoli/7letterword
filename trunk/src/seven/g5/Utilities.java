@@ -3,6 +3,7 @@ package seven.g5;
 import java.util.ArrayList;
 import java.util.List;
 
+import seven.g5.data.Word;
 import seven.g5.gameHolders.*;
 import seven.ui.*;
 
@@ -15,7 +16,7 @@ public class Utilities {
 		int turns = gi.getNoOfTurnsRemaining();
 		for(int i=0;i<=turns;i++) {
 			//System.out.println((float)gi.getNumberLettersRemaining().get(letter1.getAlphabet()));
-			p+= (float)(gi.getNumberLettersRemaining().get(letter1.getAlphabet())+1)/(float)(98-i);
+			p+= (float)(gi.getNumberLettersRemaining().get(letter1.getAlphabet()))/(float)(98-i);
 		}
 		return p;
 	}
@@ -25,5 +26,29 @@ public class Utilities {
 			System.out.print(l.getAlphabet() + ", ");
 		}
 		System.out.println();
+	}
+	
+	public static ArrayList<Word> calculateProbabilitiesOfWord(ArrayList<Word> allFutureWords,
+			GameInfo gi) {
+		double prob;
+		for( Word w: allFutureWords ) {
+			prob = 1;
+			String s = w.toString();
+			//chance of each of the letters coming up in one turn
+			for ( int c = 0; c < s.length(); c++ ) {
+				prob *= gi.getNumberLettersRemaining().get(s.charAt(c)) / gi.getTotalLettersRemaining();
+			}
+			//chance of all letters coming up by end of game
+			prob *= gi.getNoOfTurnsRemaining();
+			w.setProbability(prob);
+		}
+		return allFutureWords;
+	}
+
+	public static ArrayList<Word> collectOnlySevenLetters(ArrayList<Word> allFutureWords) {
+		for( int i=0; i<allFutureWords.size(); i++ ) {
+			if( allFutureWords.size() < 7 ) allFutureWords.remove(i);
+		}
+		return allFutureWords;
 	}
 }
