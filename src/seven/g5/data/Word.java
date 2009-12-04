@@ -12,7 +12,7 @@ public class Word implements Comparable<Word>{
 	 * the sum of integer values of all letters
 	 */
 	private int score;
-	
+	private double probability;
 	private float weightedScore;
 
 	public Word(String stringRepresentation) {
@@ -80,5 +80,17 @@ public class Word implements Comparable<Word>{
 	@Override
 	public int compareTo(Word o) {
 		return o.getScore() - this.getScore();
+	}
+
+	public double getProbability() {
+		return probability;
+	}
+
+	public void setProbability(double prob) {
+		this.probability = prob;
+	}
+
+	public void setWeightedScore(float weightedScore) {
+		this.weightedScore = weightedScore;
 	}
 }

@@ -5,19 +5,65 @@
 
 package seven.g5.strategies;
 
+import java.util.ArrayList;
+
+import seven.g5.Utilities;
+import seven.g5.data.ScrabbleParameters;
+import seven.g5.data.Word;
 import seven.g5.gameHolders.GameInfo;
 import seven.g5.gameHolders.PlayerInfo;
+import seven.ui.Letter;
 
 public class SevenLetterManyPlayerStrategy extends Strategy {
 
 	public SevenLetterManyPlayerStrategy() {
-		// TODO Auto-generated constructor stub
+		super();
+		log.debug("Switching to SevenLetterManyPlayer Mode");
 	}
 
 	@Override
 	public int getBid(GameInfo gi, PlayerInfo pi) {
-		// TODO Auto-generated method stub
+		
+		ArrayList<Letter> hand = new ArrayList<Letter>();
+		for (Letter ltr: pi.getRack()) hand.add(ltr);
+		ArrayList<Letter> targets = pi.getLettersToTarget();
+		
+		ArrayList<Word> allFutureWords = pi.getDictionaryHandler().futureAnagram(hand);
+
+		gi.decrementLettersRemainingInBag( gi.getCurrentBidLetter() ); 
+
+		if( allFutureWords != null ) {
+
+			Utilities.collectOnlySevenLetters( allFutureWords );
+			Utilities.calculateProbabilitiesOfWord( allFutureWords, gi );
+			//log.debug("word probabilities ");
+			//for( Word w: allFutureWords ) log.debug(w+": "+w.getProbability());
+			log.debug("player "+pi.getPlayerId()+" mostlikelyword "+pi.getDictionaryHandler().getMostProbableWordOfList( allFutureWords ));
+			Word mostLikelyWord = pi.getDictionaryHandler().getMostProbableWordOfList( allFutureWords );
+		
+			if ( mostLikelyWord != null ) {
+				for ( int c = 0; c < mostLikelyWord.toString().length(); c++ ) {
+					targets.add(
+							new Letter( mostLikelyWord.toString().charAt(c), 
+									ScrabbleParameters.getScore( mostLikelyWord.toString().charAt(c) ) ));
+				}	
+		
+				for( int i=0; i < targets.size(); i++ ) {
+					for ( int j=0; j<hand.size(); j++ ) {
+						if (hand.get(j).getAlphabet() == targets.get(i).getAlphabet() ) {
+							hand.remove(j);
+							targets.remove(i);
+							break;
+						}
+					}
+				}
+				
+				
+				for( Letter ltr: targets) 
+					if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() ))
+						return 10;
+			}
+		}
 		return 0;
 	}
-
 }

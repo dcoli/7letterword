@@ -12,7 +12,7 @@ public class EmpiricalFrameworkStrategy extends Strategy {
 	
 	public EmpiricalFrameworkStrategy() {
 		super();
-		System.out.println("Switching to Empirical Mode! Zoooom!");
+		log.debug("Switching to Empirical Mode! Zoooom!");
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class EmpiricalFrameworkStrategy extends Strategy {
 		ArrayList<Letter> tempHand = new ArrayList<Letter>(pi.getRack());
 		tempHand.add(gi.getCurrentBidLetter());
 		
-		System.out.println("Hand! " + tempHand.toString());
+		log.debug("Hand! " + tempHand.toString());
 		
 		ArrayList<Word> allFutureWords = pi.getDictionaryHandler().futureAnagram(tempHand);
 		

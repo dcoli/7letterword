@@ -2,6 +2,8 @@ package seven.g5;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -12,19 +14,36 @@ import seven.g5.apriori_ben.LetterMine;
 import seven.g5.apriori_ben.DataMine.ItemSet;
 import seven.g5.apriori_ben.LetterMine.LetterSet;
 import seven.g5.data.Word;
+import seven.g5.gameHolders.GameInfo;
 import seven.ui.CSVReader;
 import seven.ui.Letter;
 
 public class DictionaryHandler {
 
 	//a priori stuff
-	private static DataMine mine = null;
-	private ItemSet[] answer;
+	private static DataMine mine;
+	private static ItemSet[] answer;
 	private Logger log;
 	
 	//pastAnagram stuff
-	HashSet<String> wordlist = new HashSet<String>();
+	private static HashSet<String> wordlist = new HashSet<String>();
 
+	PriorityQueue<Word> binHeapOfWordsByProbability = new PriorityQueue<Word>(1,
+			new Comparator<Word>() {
+				public int compare(Word a, Word b)
+				{
+					double scoreA = a.getProbability();
+					double scoreB = b.getProbability();
+					if (scoreB>scoreA)
+						return 1;
+					else if (scoreB<scoreA)
+						return -1;
+					else
+						return 0;
+				}
+			}
+		);
+	
 	public HashSet<String> getWordlist() {
 		return wordlist;
 	}
@@ -37,8 +56,9 @@ public class DictionaryHandler {
 	private PriorityQueue<Word> binHeapOfWordsByValue;
 
 	public DictionaryHandler() {
+		log = new Logger(LogLevel.DEBUG,this.getClass());
 		this.binHeapOfWordsByValue = new PriorityQueue<Word>(1);
-		this.mine = new LetterMine("src/seven/g5/super-small-wordlist.txt");//src/seven/g5/data/FilteredWords.txt");
+		this.mine = new LetterMine("src/seven/g5/data/FilteredWords.txt");//src/seven/g5/super-small-wordlist.txt");
 		this.loadDictionary();
 		
 		this.mine.buildIndex();
@@ -46,7 +66,7 @@ public class DictionaryHandler {
 	}
 	
 	public ArrayList<Word> futureAnagram(List<Letter> hand) {
-		System.out.println("Future!");
+		log.debug("Future!");
 		Utilities.printLetters(hand);
 		
 		if(hand.size() == 0) {
@@ -84,6 +104,13 @@ public class DictionaryHandler {
 		else return null;
 	}
 	
+	public Word getMostProbableWordOfList(ArrayList<Word> listofWords2) {
+		binHeapOfWordsByProbability.clear();
+		for( Word w: listofWords2 ) binHeapOfWordsByProbability.add(w);
+		if( binHeapOfWordsByProbability.peek() != null ) return binHeapOfWordsByProbability.peek();
+		else return null;
+	}
+
 	//setup for pastAnagrams
 	public void loadDictionary() {
 		try{
@@ -99,7 +126,7 @@ public class DictionaryHandler {
 		} catch(Exception e)
 		{
 			e.printStackTrace();
-			System.out.println("\n Could not load dictionary!");
+			log.debug("\n Could not load dictionary!");
 		}
 	}
 	

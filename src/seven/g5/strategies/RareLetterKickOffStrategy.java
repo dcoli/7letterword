@@ -4,12 +4,12 @@ import seven.g5.gameHolders.GameInfo;
 import seven.g5.gameHolders.PlayerInfo;
 import seven.g5.Utilities;
 
-public class KickOffStrategy extends Strategy {
+public class RareLetterKickOffStrategy extends Strategy {
 
 
-	public KickOffStrategy() {
+	public RareLetterKickOffStrategy() {
 		super();
-		System.out.println("Switching to KickOff Strategy! Pow!");
+		System.out.println("Switching to RareLetter KickOff Strategy! Pow!");
 	}
 
 	@Override
