@@ -26,7 +26,7 @@ public class DictionaryHandler {
 	private Logger log;
 	
 	//pastAnagram stuff
-	private static HashSet<String> wordlist = new HashSet<String>();
+	private static HashSet<String> wordlist;
 
 	PriorityQueue<Word> binHeapOfWordsByProbability = new PriorityQueue<Word>(1,
 			new Comparator<Word>() {
@@ -49,7 +49,7 @@ public class DictionaryHandler {
 	}
 
 	public void setWordlist(HashSet<String> wordlist) {
-		this.wordlist = wordlist;
+		DictionaryHandler.wordlist = wordlist;
 	}
 
 	//futureAnagram stuff
@@ -63,8 +63,10 @@ public class DictionaryHandler {
 			this.mine.buildIndex();
 			this.answer = mine.aPriori(0.000001);
 		}
-		if( this.wordlist == null ) 
+		if( DictionaryHandler.wordlist == null ) { 
+			DictionaryHandler.wordlist = new HashSet<String>();
 			this.loadDictionary();
+		}
 	}
 	
 	public ArrayList<Word> futureAnagram(List<Letter> hand) {
@@ -102,6 +104,7 @@ public class DictionaryHandler {
 		// TODO Auto-generated method stub
 		binHeapOfWordsByValue.clear();
 		for( Word w: listofWords2 ) binHeapOfWordsByValue.add(w);
+		log.debug("best word: "+binHeapOfWordsByValue.peek());
 		if( binHeapOfWordsByValue.peek() != null ) return binHeapOfWordsByValue.peek();
 		else return null;
 	}
@@ -122,7 +125,8 @@ public class DictionaryHandler {
 			while((nextLine = csvreader.readNext()) != null)
 			{
 				String word = nextLine[0];
-				this.wordlist.add(word);
+				DictionaryHandler.wordlist.add(word);
+				log.debug(word);
 			}
 
 		} catch(Exception e)
@@ -139,7 +143,7 @@ public class DictionaryHandler {
 		int[] tp = new int[26] ;
 		for(int i=0;i<26;++i) freq[i] = 0 ;
 		for(int i=0;i<rack.size();++i) ++freq[rack.get(i).getAlphabet()-'A'] ;
-		for(String str : this.wordlist) if(this.wordlist.contains(str)){
+		for(String str : DictionaryHandler.wordlist) if(DictionaryHandler.wordlist.contains(str)){
 
 			for(int i=0;i<26;++i) tp[i] = 0 ;
 			int i = 0 ;
@@ -151,6 +155,7 @@ public class DictionaryHandler {
 			}
 			if(i < str.length()) continue ;
 			goodAnagrams.add(new Word(str)) ;
+			log.debug("possible word: "+str);
 		}
 		return goodAnagrams;
 	}
