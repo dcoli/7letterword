@@ -134,20 +134,22 @@ public abstract class Strategy {
 	public String getFinalWord(GameInfo gi, PlayerInfo pi) {
 		log.debug("All Words In End!");
 		
-		ArrayList<Word> endW = pi.getDictionaryHandler().pastAnagram(pi.getRack());
-		
-		if( endW != null ) {
-			for(Word w : endW) {
-				log.debug(w.toString() + " - " + w.getScore());
-			}
-		}
-		
+		int i=0;
 		for( Letter l: pi.getRack() ) 
-			System.out.print( ","+l.getAlphabet());//pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
+			System.out.print( (i++==0?"":",")+l.getAlphabet());//pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
 		
-		String endWord = pi.getDictionaryHandler().getBestWordOfList(pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
-		if( endWord != null ) return endWord;
-		else return "(none)";
+		ArrayList<Word> endWordList = pi.getDictionaryHandler().pastAnagram(pi.getRack());
+		
+		if( endWordList.size() > 0 ) {
+			if( endWordList.size() > 0 ) {
+				for(Word w : endWordList) {
+					log.debug(w.toString() + " - " + w.getScore());
+				}
+			}
+			String endWord = pi.getDictionaryHandler().getBestWordOfList(endWordList).toString();
+			if( endWord != null ) 
+				return endWord;
+		}
+		return "(none)";
 	}
-
 }

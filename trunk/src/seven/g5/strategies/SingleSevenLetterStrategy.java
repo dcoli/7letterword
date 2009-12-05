@@ -14,9 +14,9 @@ import seven.g5.gameHolders.GameInfo;
 import seven.g5.gameHolders.PlayerInfo;
 import seven.ui.Letter;
 
-public class SevenLetterManyPlayerStrategy extends Strategy {
+public class SingleSevenLetterStrategy extends Strategy {
 
-	public SevenLetterManyPlayerStrategy() {
+	public SingleSevenLetterStrategy() {
 		super();
 		log.debug("Switching to SevenLetterManyPlayer Mode");
 	}
@@ -29,8 +29,6 @@ public class SevenLetterManyPlayerStrategy extends Strategy {
 		ArrayList<Letter> targets = pi.getLettersToTarget();
 		
 		ArrayList<Word> allFutureWords = pi.getDictionaryHandler().futureAnagram(hand);
-
-		gi.decrementLettersRemainingInBag( gi.getCurrentBidLetter() ); 
 
 		if( allFutureWords != null ) {
 

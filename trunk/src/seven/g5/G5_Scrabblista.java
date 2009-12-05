@@ -8,7 +8,7 @@ import seven.g5.Logger.LogLevel;
 import seven.g5.data.ScrabbleParameters;
 import seven.g5.strategies.EmpiricalFrameworkStrategy;
 import seven.g5.strategies.RareLetterKickOffStrategy;
-import seven.g5.strategies.SevenLetterManyPlayerStrategy;
+import seven.g5.strategies.SingleSevenLetterStrategy;
 import seven.g5.strategies.CommonLetterKickOffStrategy;
 import seven.g5.strategies.Strategy;
 import seven.ui.Letter;
@@ -33,6 +33,7 @@ public class G5_Scrabblista implements Player {
 	//bidding info
 	private int totalPoints = 100;
 	private HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
+	private int totalLettersRemaining;
 	private int numberTurnsRemaining;
 	
 	//dictionary handler
@@ -55,12 +56,12 @@ public class G5_Scrabblista implements Player {
 
 	public String returnWord() {
 		String finalWord = strategy.getFinalWord(this.gi, this.pi);
-		this.turnNumber = 1;
+		this.turnNumber = 0;
 		this.myRack.clear();
 		this.pi.setRack(myRack);
 		this.gi.setPlayerBidList(null);
 		this.gi.setCurrentBidLetter(null);
-		this.gi.initializeLettersRemaining();
+		initializeLettersRemaining();
 		return finalWord;
 	}
 
@@ -68,18 +69,31 @@ public class G5_Scrabblista implements Player {
 	public int Bid(Letter bidLetter, ArrayList<PlayerBids> PlayerBidList, int totalRounds, ArrayList<String> PlayerList, SecretState secretstate, int PlayerID) {
 				//get the letters we start with
 		
-		if(this.turnNumber == 1) {
+		if(this.turnNumber == 0) {
 			numberTurnsRemaining =  PlayerList.size() * 7;
+			initializeLettersRemaining();
 			for(Letter ltr : secretstate.getSecretLetters()) {
-				this.myRack.add(new Letter(ltr.getAlphabet(),ScrabbleParameters.getScore(ltr.getAlphabet())));
+				if( ltr != null ) { 
+					this.myRack.add(new Letter(ltr.getAlphabet(),ScrabbleParameters.getScore(ltr.getAlphabet())));
+					decrementLettersRemainingInBag( ltr );
+				}
 			}
 		}
+		else --numberTurnsRemaining;
+
+		if( bidLetter != null )
+			decrementLettersRemainingInBag( bidLetter ); 
+
+		//fill person info
+		this.pi = new PlayerInfo(this.myRack, PlayerID, this.dh);
 		
+		//fill gameInfo
+		this.gi = new GameInfo(PlayerBidList, bidLetter, totalRounds, secretstate, PlayerList, numberTurnsRemaining, numberLettersRemaining, totalLettersRemaining);
 		if( PlayerList.size() > 4 ) {
 			if( this.myRack.size() == 0 ) 
 				this.strategy = new CommonLetterKickOffStrategy();
 			else
-				this.strategy = new SevenLetterManyPlayerStrategy();
+				this.strategy = new SingleSevenLetterStrategy();
 		}
 		else {
 			if( this.myRack.size() == 0 )
@@ -88,12 +102,6 @@ public class G5_Scrabblista implements Player {
 				this.strategy = new CommonLetterKickOffStrategy();
 			else this.strategy = new EmpiricalFrameworkStrategy();
 		}
-
-		//fill person info
-		this.pi = new PlayerInfo(this.myRack, PlayerID, this.dh);
-
-		//fill gameInfo
-		this.gi = new GameInfo(PlayerBidList, bidLetter, this.totalRounds, secretstate, PlayerList, numberTurnsRemaining, numberLettersRemaining);
 		
 		//get results from last round
 		if(PlayerBidList != null && PlayerBidList.size() > 0 ) {
@@ -107,13 +115,46 @@ public class G5_Scrabblista implements Player {
 //		if(pi.getRack().size() >= 2) {
 //			this.strategy = new EmpiricalFrameworkStrategy();
 //		}
-
-		if(this.turnNumber == 0) {
-			this.gi.initializeLettersRemaining();
-		}
 		
 		turnNumber++;
 		
 		return strategy.getBid(this.gi, this.pi);
+	}
+	
+	//this is stuff regarding probability and tiles remaining
+	private void decrementLettersRemainingInBag(Letter letter2) {
+		int oldAmount = numberLettersRemaining.get(letter2.getAlphabet());
+		numberLettersRemaining.put(letter2.getAlphabet(), --oldAmount );
+		--totalLettersRemaining;
+		//--noOfTurnsRemaining;
+	}
+	
+	public void initializeLettersRemaining() {
+		numberLettersRemaining.put('A', ScrabbleParameters.getCount('A'));
+		numberLettersRemaining.put('B', ScrabbleParameters.getCount('B'));
+		numberLettersRemaining.put('C', ScrabbleParameters.getCount('C'));
+		numberLettersRemaining.put('D', ScrabbleParameters.getCount('D'));
+		numberLettersRemaining.put('E', ScrabbleParameters.getCount('E'));
+		numberLettersRemaining.put('F', ScrabbleParameters.getCount('F'));
+		numberLettersRemaining.put('G', ScrabbleParameters.getCount('G'));
+		numberLettersRemaining.put('H', ScrabbleParameters.getCount('H'));
+		numberLettersRemaining.put('I', ScrabbleParameters.getCount('I'));
+		numberLettersRemaining.put('J', ScrabbleParameters.getCount('J'));
+		numberLettersRemaining.put('K', ScrabbleParameters.getCount('K'));
+		numberLettersRemaining.put('L', ScrabbleParameters.getCount('L'));
+		numberLettersRemaining.put('M', ScrabbleParameters.getCount('M'));
+		numberLettersRemaining.put('N', ScrabbleParameters.getCount('N'));
+		numberLettersRemaining.put('O', ScrabbleParameters.getCount('O'));
+		numberLettersRemaining.put('P', ScrabbleParameters.getCount('P'));
+		numberLettersRemaining.put('Q', ScrabbleParameters.getCount('Q'));
+		numberLettersRemaining.put('R', ScrabbleParameters.getCount('R'));
+		numberLettersRemaining.put('S', ScrabbleParameters.getCount('S'));
+		numberLettersRemaining.put('T', ScrabbleParameters.getCount('T'));
+		numberLettersRemaining.put('U', ScrabbleParameters.getCount('U'));
+		numberLettersRemaining.put('V', ScrabbleParameters.getCount('V'));
+		numberLettersRemaining.put('W', ScrabbleParameters.getCount('W'));
+		numberLettersRemaining.put('X', ScrabbleParameters.getCount('X'));
+		numberLettersRemaining.put('Y', ScrabbleParameters.getCount('Y'));
+		numberLettersRemaining.put('Z', ScrabbleParameters.getCount('Z'));
 	}
 }
