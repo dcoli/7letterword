@@ -59,7 +59,7 @@ public class SingleSevenLetterStrategy extends Strategy {
 				
 				for( Letter ltr: targets) 
 					if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() ))
-						return 10;
+						return gi.getCurrentBidLetter().getValue() + 1;
 			}
 		}
 		return 0;
