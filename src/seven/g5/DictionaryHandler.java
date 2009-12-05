@@ -126,7 +126,7 @@ public class DictionaryHandler {
 			{
 				String word = nextLine[0];
 				DictionaryHandler.wordlist.add(word);
-				log.debug(word);
+				//log.debug(word);
 			}
 
 		} catch(Exception e)
