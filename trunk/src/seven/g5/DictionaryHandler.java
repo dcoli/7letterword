@@ -58,12 +58,13 @@ public class DictionaryHandler {
 	public DictionaryHandler() {
 		log = new Logger(LogLevel.DEBUG,this.getClass());
 		this.binHeapOfWordsByValue = new PriorityQueue<Word>(1);
-		if( DictionaryHandler.mine == null ) 
-			DictionaryHandler.mine = new LetterMine("src/seven/g5/data/FilteredWords.txt");//src/seven/g5/super-small-wordlist.txt");
-		this.loadDictionary();
-		
-		DictionaryHandler.mine.buildIndex();
-		DictionaryHandler.answer = mine.aPriori(0.000001);
+		if( this.mine == null ) {
+			this.mine = new LetterMine("src/seven/g5/data/FilteredWords.txt");//src/seven/g5/super-small-wordlist.txt");
+			this.mine.buildIndex();
+			this.answer = mine.aPriori(0.000001);
+		}
+		if( this.wordlist == null ) 
+			this.loadDictionary();
 	}
 	
 	public ArrayList<Word> futureAnagram(List<Letter> hand) {
@@ -105,6 +106,13 @@ public class DictionaryHandler {
 		else return null;
 	}
 	
+	public Word getMostProbableWordOfList(ArrayList<Word> listofWords2) {
+		binHeapOfWordsByProbability.clear();
+		for( Word w: listofWords2 ) binHeapOfWordsByProbability.add(w);
+		if( binHeapOfWordsByProbability.peek() != null ) return binHeapOfWordsByProbability.peek();
+		else return null;
+	}
+
 	//setup for pastAnagrams
 	public void loadDictionary() {
 		try{
@@ -114,7 +122,7 @@ public class DictionaryHandler {
 			while((nextLine = csvreader.readNext()) != null)
 			{
 				String word = nextLine[0];
-				DictionaryHandler.wordlist.add(word);
+				this.wordlist.add(word);
 			}
 
 		} catch(Exception e)

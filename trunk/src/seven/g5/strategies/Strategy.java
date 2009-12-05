@@ -136,13 +136,18 @@ public abstract class Strategy {
 		
 		ArrayList<Word> endW = pi.getDictionaryHandler().pastAnagram(pi.getRack());
 		
-		for(Word w : endW) {
-			System.out.println(w.toString() + " - " + w.getScore());
+		if( endW != null ) {
+			for(Word w : endW) {
+				log.debug(w.toString() + " - " + w.getScore());
+			}
 		}
 		
-		log.debug("rack="+pi.getRack().toString());//pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
+		for( Letter l: pi.getRack() ) 
+			System.out.print( ","+l.getAlphabet());//pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
 		
-		return pi.getDictionaryHandler().getBestWordOfList(pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
+		String endWord = pi.getDictionaryHandler().getBestWordOfList(pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
+		if( endWord != null ) return endWord;
+		else return "(none)";
 	}
 
 }
