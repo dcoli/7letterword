@@ -27,7 +27,7 @@ public class ScrabbleMiner {
                 mine.buildIndex();
                 ItemSet[] answer = mine.aPriori(0.000001);
                 LetterSet i = (LetterSet) mine.getCachedItemSet(args);
-                System.out.println("alive and well: " + answer.length + " itemsets total");
+                //System.out.println("alive and well: " + answer.length + " itemsets total");
                 if (null != i) {
                         String[] words = i.getWords();
                         System.out.format(
@@ -35,7 +35,7 @@ public class ScrabbleMiner {
                                         new Object[]{i.getKey(), words.length}
                         );
                         for (String w : words) {
-                                System.out.println(w);
+                                //System.out.println(w);
                         }
                 } else {
                         System.out.format(

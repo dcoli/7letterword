@@ -7,6 +7,7 @@ import java.util.HashMap;
 import seven.g5.Logger.LogLevel;
 import seven.g5.data.ScrabbleParameters;
 import seven.g5.strategies.EmpiricalFrameworkStrategy;
+import seven.g5.strategies.MostPossibleWordsStrategy;
 import seven.g5.strategies.RareLetterKickOffStrategy;
 import seven.g5.strategies.SingleSevenLetterStrategy;
 import seven.g5.strategies.CommonLetterKickOffStrategy;
@@ -89,13 +90,12 @@ public class G5_Scrabblista implements Player {
 		
 		//fill gameInfo
 		this.gi = new GameInfo(PlayerBidList, bidLetter, totalRounds, secretstate, PlayerList, numberTurnsRemaining, numberLettersRemaining, totalLettersRemaining);
-		if( PlayerList.size() > 3 ) {
+		if( PlayerList.size() > 4 ) {
 			if( this.myRack.size() == 0 )
-				this.strategy = new RareLetterKickOffStrategy();
-			else if( this.myRack.size() == 1 )
 				this.strategy = new CommonLetterKickOffStrategy();
 			else
-				this.strategy = new SingleSevenLetterStrategy();
+				this.strategy = new MostPossibleWordsStrategy();
+				//this.strategy = new SingleSevenLetterStrategy();
 		}
 		else {
 			if( this.myRack.size() == 0 )

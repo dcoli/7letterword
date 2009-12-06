@@ -65,7 +65,7 @@
 //		} catch(Exception e)
 //		{
 //			e.printStackTrace();
-//			System.out.println("\n Could not load dictionary!");
+//			//System.out.println("\n Could not load dictionary!");
 //		}
 //	}
 //
@@ -185,7 +185,7 @@
 //		for(int i=0;i<26;++i) freq[i] = 0 ;
 //		for(int i=0;i<hand.size();++i) ++freq[hand.get(i).getAlphabet()-'A'] ;
 //		//for(int i=0;i<hand.size();++i) System.out.print(hand.get(i).getAlphabet() + " ") ;
-//		//System.out.println("") ;
+//		////System.out.println("") ;
 //		for(String str : sowpods.wordlist.keySet()) if(sowpods.wordlist.get(str)){
 //
 //			for(int i=0;i<26;++i) tp[i] = 0 ;
@@ -256,7 +256,7 @@
 //		for(int i=0;i<26;++i) freq[i] = 0 ;
 //		for(int i=0;i<hand1.size();++i) ++freq[hand1.get(i).getAlphabet()-'A'];
 //		//for(int i=0;i<hand1.size();++i) System.out.print(hand1.get(i).getAlphabet()) ;
-//		//System.out.println("") ;
+//		////System.out.println("") ;
 //		for(String str : sowpods.wordlist.keySet()) if(sowpods.wordlist.get(str)){
 //			for(int i=0;i<26;++i) tp[i] = 0 ;
 //			int i = 0 ;
@@ -280,7 +280,7 @@
 //		//colin removed
 //		//letters[size-1] = c;
 //		hand.add(x);
-//		//System.out.println("Word list: "+words);
+//		////System.out.println("Word list: "+words);
 //	}
 //
 //	//        public void getFutureWordlist(Letter x){
@@ -288,7 +288,7 @@
 //	//            ++futureSize;
 //	//            //there's a bug here
 //	//            futureWords[futureSize-1] = c;
-//	//            //System.out.println("Word list: "+words);
+//	//            ////System.out.println("Word list: "+words);
 //	//        }
 //
 //
@@ -302,7 +302,7 @@
 //	//                strat.binHeapOfCurrentWords.add(new Word("HAT"));
 //	//               
 //	//                while( strat.binHeapOfCurrentWords.size() > 0 ) {
-//	//                       // System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
+//	//                       // //System.out.println("word "+strat.binHeapOfCurrentWords.peek()+" is "+((Word)strat.binHeapOfCurrentWords.poll()).getScore() );
 //	//                }
 //	//        }
 //

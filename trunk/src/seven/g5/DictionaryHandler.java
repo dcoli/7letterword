@@ -8,13 +8,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import seven.g5.Logger.LogLevel;
+import seven.g5.Logger.*;
+//import seven.g5.Logger.LogLevel;
 import seven.g5.apriori_ben.DataMine;
 import seven.g5.apriori_ben.LetterMine;
 import seven.g5.apriori_ben.DataMine.ItemSet;
 import seven.g5.apriori_ben.LetterMine.LetterSet;
+import seven.g5.data.ScrabbleParameters;
 import seven.g5.data.Word;
+import seven.g5.data.OurLetter;
 import seven.g5.gameHolders.GameInfo;
+import seven.g5.gameHolders.PlayerInfo;
 import seven.ui.CSVReader;
 import seven.ui.Letter;
 
@@ -43,7 +47,23 @@ public class DictionaryHandler {
 				}
 			}
 		);
-	
+		
+	PriorityQueue<OurLetter> binHeapOfOurLettersByNumPossibleWords = new PriorityQueue<OurLetter>(1,
+			new Comparator<OurLetter>() {
+				public int compare(OurLetter a, OurLetter b)
+				{
+					double scoreA = a.getNumWordsPossibleWithThisAdditionalLetter();
+					double scoreB = b.getNumWordsPossibleWithThisAdditionalLetter();
+					if (scoreB>scoreA)
+						return 1;
+					else if (scoreB<scoreA)
+						return -1;
+					else
+						return 0;
+				}
+			}
+		);
+		
 	public HashSet<String> getWordlist() {
 		return wordlist;
 	}
@@ -62,6 +82,7 @@ public class DictionaryHandler {
 			this.mine = new LetterMine("src/seven/g5/data/FilteredWords.txt");//src/seven/g5/super-small-wordlist.txt");
 			this.mine.buildIndex();
 			this.answer = mine.aPriori(0.000001);
+			log.debug("Built index");
 		}
 		if( DictionaryHandler.wordlist == null ) { 
 			DictionaryHandler.wordlist = new HashSet<String>();
@@ -158,5 +179,28 @@ public class DictionaryHandler {
 			log.debug("possible word: "+str);
 		}
 		return goodAnagrams;
+	}
+
+	public ArrayList<Letter> getLettersWithMostFutureWords(PlayerInfo pi, int i) {
+		ArrayList<Word> allFutureWords = new ArrayList<Word>();
+		ArrayList<Letter> hand = new ArrayList<Letter>();
+		ArrayList<Letter> targets = new ArrayList<Letter>();
+		for (Letter ltr: pi.getRack()) hand.add(ltr);
+		binHeapOfOurLettersByNumPossibleWords.clear();
+		for( int c = 0; c < 26; c++) {
+			char l = (char)(c+'A');
+			OurLetter Let = new OurLetter(l, ScrabbleParameters.getScore(l));
+			hand.add(Let);
+			allFutureWords = pi.getDictionaryHandler().futureAnagram(hand);
+			Utilities.collectOnlySevenLetters( allFutureWords );
+			log.debug("'"+Let.getAlphabet()+"' - "+allFutureWords.size());
+			Let.setNumWordsPossibleWithThisAdditionalLetter( allFutureWords.size() );
+			binHeapOfOurLettersByNumPossibleWords.add(Let);
+			hand.remove( hand.size() - 1 );
+		}
+		for( int index=0; index<i; index++ ) {
+			targets.add( binHeapOfOurLettersByNumPossibleWords.poll() );
+		}
+		return targets;
 	}
 }

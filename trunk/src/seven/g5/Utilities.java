@@ -9,14 +9,14 @@ import seven.ui.*;
 
 public class Utilities {
 	//effective java and headfirst java
-	public static float getProbabilityOfLetter(Letter letter1, GameInfo gi)	
+	public static double getProbabilityOfLetter(Letter letter1, GameInfo gi)	
 	{
-		float p = 0;
-		//System.out.println(gi.getNoOfTurnsRemaining());
+		double p = 0;
+		////System.out.println(gi.getNoOfTurnsRemaining());
 		int turns = gi.getNoOfTurnsRemaining();
 		for(int i=0;i<=turns;i++) {
-			//System.out.println((float)gi.getNumberLettersRemaining().get(letter1.getAlphabet()));
-			p+= (float)(gi.getNumberLettersRemaining().get(letter1.getAlphabet()))/(float)(98-i);
+			////System.out.println((double)gi.getNumberLettersRemaining().get(letter1.getAlphabet()));
+			p+= (double)(gi.getNumberLettersRemaining().get(letter1.getAlphabet()))/(double)(98-i);
 		}
 		return p;
 	}
@@ -25,7 +25,7 @@ public class Utilities {
 		for(Letter l : hand) {
 			System.out.print(l.getAlphabet() + ", ");
 		}
-		System.out.println();
+		//System.out.println();
 	}
 	
 	public static ArrayList<Word> calculateProbabilitiesOfWord(ArrayList<Word> allFutureWords,
@@ -36,7 +36,7 @@ public class Utilities {
 			String s = w.toString();
 			//chance of each of the letters coming up in one turn
 			for ( int c = 0; c < s.length(); c++ ) {
-				prob *= gi.getNumberLettersRemaining().get(s.charAt(c)) / gi.getTotalLettersRemaining();
+				prob *= ((double)gi.getNumberLettersRemaining().get(s.charAt(c))) / (double)(gi.getTotalLettersRemaining());
 			}
 			//chance of all letters coming up by end of game
 			prob *= gi.getNoOfTurnsRemaining();
