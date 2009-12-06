@@ -69,7 +69,7 @@ public class GameEngine extends javax.swing.JFrame {
 
                 }
             } catch (InterruptedException ex) {
-                System.out.println("Game runner interrupted");
+                //System.out.println("Game runner interrupted");
             }
         }
 
@@ -510,7 +510,7 @@ public class GameEngine extends javax.swing.JFrame {
              {
                  output += "," + gameresults.get(loop).scoreList.get(loop2).toString();
              }
-             System.out.println(output);
+             //System.out.println(output);
              bufferedWriter.write(output);
              bufferedWriter.newLine();
          }
@@ -518,10 +518,10 @@ public class GameEngine extends javax.swing.JFrame {
         bufferedWriter.close();
         }catch(Exception ex)
         {
-            System.out.println("Could not write tournament output");
+            //System.out.println("Could not write tournament output");
         }
 
-        System.out.println("Tournament done!");
+        //System.out.println("Tournament done!");
     }//GEN-LAST:event_TournamentButtonActionPerformed
 
     /**

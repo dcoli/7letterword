@@ -226,7 +226,7 @@ public class Scrabble {
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println("\n Could not load dictionary!");
+            //System.out.println("\n Could not load dictionary!");
         }
 
     }

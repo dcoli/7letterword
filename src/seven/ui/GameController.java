@@ -189,7 +189,7 @@ public class GameController {
                 else
                 {
                     wordOK = false;
-                    System.out.println("Invalid word by Player: " + gc_local.PlayerList.get(loop));
+                    //System.out.println("Invalid word by Player: " + gc_local.PlayerList.get(loop));
                     break;
                 }
             }
@@ -234,7 +234,7 @@ public class GameController {
         }
         Collections.sort(bidvalarr,new BidvalComparator());
         for(Bidval bv: bidvalarr){
-        	//System.out.println(bv.bid);
+        	////System.out.println(bv.bid);
         }
 
         int gotCount = 1;
