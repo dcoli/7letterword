@@ -32,6 +32,21 @@ public class DictionaryHandler {
 	//pastAnagram stuff
 	private static HashSet<String> wordlist;
 
+	public DictionaryHandler() {
+		log = new Logger(LogLevel.DEBUG,this.getClass());
+		this.binHeapOfWordsByValue = new PriorityQueue<Word>(1);
+		if( DictionaryHandler.mine == null ) {
+			DictionaryHandler.mine = new LetterMine("src/seven/g5/data/FilteredWords.txt");//src/seven/g5/super-small-wordlist.txt");
+			DictionaryHandler.mine.buildIndex();
+			DictionaryHandler.answer = mine.aPriori(0.000001);
+			log.debug("Built index");
+		}
+		if( DictionaryHandler.wordlist == null ) { 
+			DictionaryHandler.wordlist = new HashSet<String>();
+			this.loadDictionary();
+		}
+	}
+
 	PriorityQueue<Word> binHeapOfWordsByProbability = new PriorityQueue<Word>(1,
 			new Comparator<Word>() {
 				public int compare(Word a, Word b)
@@ -75,20 +90,6 @@ public class DictionaryHandler {
 	//futureAnagram stuff
 	private PriorityQueue<Word> binHeapOfWordsByValue;
 
-	public DictionaryHandler() {
-		log = new Logger(LogLevel.DEBUG,this.getClass());
-		this.binHeapOfWordsByValue = new PriorityQueue<Word>(1);
-		if( this.mine == null ) {
-			this.mine = new LetterMine("src/seven/g5/data/FilteredWords.txt");//src/seven/g5/super-small-wordlist.txt");
-			this.mine.buildIndex();
-			this.answer = mine.aPriori(0.000001);
-			log.debug("Built index");
-		}
-		if( DictionaryHandler.wordlist == null ) { 
-			DictionaryHandler.wordlist = new HashSet<String>();
-			this.loadDictionary();
-		}
-	}
 	
 	public ArrayList<Word> futureAnagram(List<Letter> hand) {
 		log.debug("Future!");
@@ -192,8 +193,9 @@ public class DictionaryHandler {
 			OurLetter Let = new OurLetter(l, ScrabbleParameters.getScore(l));
 			hand.add(Let);
 			allFutureWords = pi.getDictionaryHandler().futureAnagram(hand);
+			System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
 			Utilities.collectOnlySevenLetters( allFutureWords );
-			log.debug("'"+Let.getAlphabet()+"' - "+allFutureWords.size());
+			System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
 			Let.setNumWordsPossibleWithThisAdditionalLetter( allFutureWords.size() );
 			binHeapOfOurLettersByNumPossibleWords.add(Let);
 			hand.remove( hand.size() - 1 );
