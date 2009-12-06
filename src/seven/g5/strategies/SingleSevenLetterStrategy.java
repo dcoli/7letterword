@@ -18,7 +18,7 @@ public class SingleSevenLetterStrategy extends Strategy {
 
 	public SingleSevenLetterStrategy() {
 		super();
-		log.debug("Switching to SevenLetterManyPlayer Mode");
+		log.debug("Switching to SingleSevenLetterStrategy Mode");
 	}
 
 	@Override

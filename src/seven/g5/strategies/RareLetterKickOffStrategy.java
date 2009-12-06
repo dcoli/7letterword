@@ -9,13 +9,13 @@ public class RareLetterKickOffStrategy extends Strategy {
 
 	public RareLetterKickOffStrategy() {
 		super();
-		System.out.println("Switching to RareLetter KickOff Strategy! Pow!");
+		//System.out.println("Switching to RareLetter KickOff Strategy! Pow!");
 	}
 
 	@Override
 	public int getBid(GameInfo gi, PlayerInfo pi) {
 		if ( pi.getRack().size() == 0 /*|| pi.getRack().size() == 1*/ ) {
-			//System.out.println(gi.getCurrentBidLetter()+" "+Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi));
+			////System.out.println(gi.getCurrentBidLetter()+" "+Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi));
 			if((Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi) <= 
 					(6.0f/98.0f)*(float)gi.getNoOfTurnsRemaining() &&
 				(Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi) >=
@@ -24,7 +24,7 @@ public class RareLetterKickOffStrategy extends Strategy {
 			}
 		}
 		if ( pi.getRack().size() == 1 /*|| pi.getRack().size() == 1*/ ) {
-			//System.out.println(gi.getCurrentBidLetter()+" "+Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi));
+			////System.out.println(gi.getCurrentBidLetter()+" "+Utilities.getProbabilityOfLetter(gi.getCurrentBidLetter(),gi));
 			if (
 			gi.getCurrentBidLetter().getAlphabet() == 'E' ||
 			gi.getCurrentBidLetter().getAlphabet() == 'A' ||
