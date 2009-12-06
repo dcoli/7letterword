@@ -23,7 +23,8 @@ public class EmpiricalFrameworkStrategy extends Strategy {
 		
 		log.debug("Hand! " + tempHand.toString());
 		
-		ArrayList<Word> allFutureWords = pi.getDictionaryHandler().futureAnagram(tempHand);
+		ArrayList<Word> tempAllWords = pi.getDictionaryHandler().futureAnagram(tempHand);
+		ArrayList<Word> allFutureWords = pi.getDictionaryHandler().getLegitWordsFromRemainingLetters(gi.getNumberLettersRemaining(), tempAllWords);
 		
 		for(Word w : allFutureWords) {
 			if(w.toString().length() == 7) {

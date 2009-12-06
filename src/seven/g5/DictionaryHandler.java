@@ -193,9 +193,9 @@ public class DictionaryHandler {
 			OurLetter Let = new OurLetter(l, ScrabbleParameters.getScore(l));
 			hand.add(Let);
 			allFutureWords = pi.getDictionaryHandler().futureAnagram(hand);
-			System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
+			//System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
 			Utilities.collectOnlySevenLetters( allFutureWords );
-			System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
+			//ystem.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
 			Let.setNumWordsPossibleWithThisAdditionalLetter( allFutureWords.size() );
 			binHeapOfOurLettersByNumPossibleWords.add(Let);
 			hand.remove( hand.size() - 1 );
@@ -204,5 +204,23 @@ public class DictionaryHandler {
 			targets.add( binHeapOfOurLettersByNumPossibleWords.poll() );
 		}
 		return targets;
+	}
+	
+	public ArrayList<Word> getLegitWordsFromRemainingLetters(HashMap<Character, Integer> remainLetters, ArrayList<Word> possibleWords) {
+		ArrayList<Word> goodWords = new ArrayList<Word>();
+		
+		for(Word w : possibleWords) {
+			HashMap<Character, Integer> tempRemaining = new HashMap<Character, Integer>(remainLetters);
+			
+			for(Letter l : w.getLetters()) {
+				tempRemaining.put(l.getAlphabet(), tempRemaining.get(l.getAlphabet()) - 1);
+				if(tempRemaining.get(l.getAlphabet()) < 0){
+					break;
+				}
+			}
+			goodWords.add(w);
+		}
+		
+		return goodWords;
 	}
 }
