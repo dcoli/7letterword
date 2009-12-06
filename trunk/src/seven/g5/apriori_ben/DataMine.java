@@ -555,7 +555,7 @@ public abstract class DataMine {
                public ItemSet intersect(ItemSet other_in, boolean finalRound) {
                        ItemBitSet other;
                        if ( !(other_in instanceof ItemBitSet)) { // unnecessary type-safety?
-                               DataMine.this.logger.warn("Found that branch that Ben thought wouldn't happen");
+                               //DataMine.this.logger.warn("Found that branch that Ben thought wouldn't happen");
                                return super.intersect(other_in, finalRound);
                        } else {
                                other = (ItemBitSet) other_in;
@@ -618,7 +618,7 @@ public abstract class DataMine {
                public ItemSet intersect(ItemSet other_in,  boolean finalRound) {
                        ItemSetInt other;
                        if ( !(other_in instanceof ItemSetInt)) { // unnecessary type-safety?
-                               DataMine.this.logger.warn("Found that branch that Ben thought wouldn't happen");
+                               //DataMine.this.logger.warn("Found that branch that Ben thought wouldn't happen");
                                return super.intersect(other_in, finalRound);
                        } else {
                                other = (ItemSetInt) other_in;
