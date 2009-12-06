@@ -33,10 +33,14 @@ public class MostPossibleWordsStrategy extends Strategy {
 		
 		Random r = new Random();
 		int bid = r.nextInt(3) + pi.getRack().size() + 1;
+//		bid += pi.getDictionaryHandler().
+//		ArrayList
 				
 		for( Letter ltr: targets) 
 			if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() ))
 				return bid;
+				//return gi.getCurrentBidLetter().getValue() + (gi.getPlayerList().size() * 7 - gi.getNoOfTurnsRemaining())/2;
+				
 		return 0;
 	}
 }
