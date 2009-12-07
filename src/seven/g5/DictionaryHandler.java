@@ -188,11 +188,11 @@ public class DictionaryHandler {
 		ArrayList<OurLetter> targets = new ArrayList<OurLetter>();
 		for (Letter ltr: pi.getRack()) hand.add(ltr);
 		binHeapOfOurLettersByNumPossibleWords.clear();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("g5 looking for future words");
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println("g5 looking for future words");
 		for( int c = 0; c < 26; c++) {
 			char l = (char)(c+'A');
 			OurLetter Let = new OurLetter(l, ScrabbleParameters.getScore(l));
@@ -200,7 +200,7 @@ public class DictionaryHandler {
 			allFutureWords = pi.getDictionaryHandler().futureAnagram(hand);
 			Utilities.collectOnlySevenLetters( allFutureWords );
 			//allFutureWords = pi.getDictionaryHandler().getLegitWordsFromRemainingLetters(gi.getNumberLettersRemaining(), allFutureWords);
-			System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
+//			System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
 
 			//System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
 			Let.setNumWordsPossibleWithThisAdditionalLetter( allFutureWords.size() );
@@ -208,6 +208,7 @@ public class DictionaryHandler {
 			hand.remove( hand.size() - 1 );
 		}
 		for( int index=0; index<i; index++ ) {
+			if( ((OurLetter)binHeapOfOurLettersByNumPossibleWords.peek()).getNumWordsPossibleWithThisAdditionalLetter() > 0 )
 			targets.add( (OurLetter)binHeapOfOurLettersByNumPossibleWords.poll() );
 			//System.out.println(targets.get(index).getAlphabet());
 		}
