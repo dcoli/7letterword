@@ -93,7 +93,7 @@ public class DictionaryHandler {
 	
 	public ArrayList<Word> futureAnagram(List<Letter> hand) {
 		log.debug("Future!");
-		Utilities.printLetters(hand);
+		//Utilities.printLetters(hand);
 		
 		if(hand.size() == 0) {
 			return new ArrayList<Word>(0);
@@ -182,27 +182,34 @@ public class DictionaryHandler {
 		return goodAnagrams;
 	}
 
-	public ArrayList<Letter> getLettersWithMostFutureWords(PlayerInfo pi, int i) {
+	public ArrayList<OurLetter> getLettersWithMostFutureWords(PlayerInfo pi, GameInfo gi, int i) {
 		ArrayList<Word> allFutureWords = new ArrayList<Word>();
 		ArrayList<Letter> hand = new ArrayList<Letter>();
-		ArrayList<Letter> targets = new ArrayList<Letter>();
+		ArrayList<OurLetter> targets = new ArrayList<OurLetter>();
 		for (Letter ltr: pi.getRack()) hand.add(ltr);
 		binHeapOfOurLettersByNumPossibleWords.clear();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("g5 looking for future words");
 		for( int c = 0; c < 26; c++) {
 			char l = (char)(c+'A');
 			OurLetter Let = new OurLetter(l, ScrabbleParameters.getScore(l));
 			hand.add(Let);
 			allFutureWords = pi.getDictionaryHandler().futureAnagram(hand);
-			//System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
 			Utilities.collectOnlySevenLetters( allFutureWords );
-			//ystem.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
+			//allFutureWords = pi.getDictionaryHandler().getLegitWordsFromRemainingLetters(gi.getNumberLettersRemaining(), allFutureWords);
+			System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
+
+			//System.out.print("'"+Let.getAlphabet()+"'-"+allFutureWords.size()+"|");
 			Let.setNumWordsPossibleWithThisAdditionalLetter( allFutureWords.size() );
 			binHeapOfOurLettersByNumPossibleWords.add(Let);
 			hand.remove( hand.size() - 1 );
 		}
 		for( int index=0; index<i; index++ ) {
-			targets.add( binHeapOfOurLettersByNumPossibleWords.poll() );
-			System.out.println(targets.get(index).getAlphabet());
+			targets.add( (OurLetter)binHeapOfOurLettersByNumPossibleWords.poll() );
+			//System.out.println(targets.get(index).getAlphabet());
 		}
 		return targets;
 	}

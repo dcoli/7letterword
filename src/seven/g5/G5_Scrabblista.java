@@ -90,10 +90,10 @@ public class G5_Scrabblista implements Player {
 		
 		//fill gameInfo
 		this.gi = new GameInfo(PlayerBidList, bidLetter, totalRounds, secretstate, PlayerList, numberTurnsRemaining, numberLettersRemaining, totalLettersRemaining);
-		if( PlayerList.size() > 5 ) {
-			if( this.myRack.size() == 0 )
-				this.strategy = new CommonLetterKickOffStrategy();
-			else
+		if( PlayerList.size() > 3 ) {
+//			if( this.myRack.size() == 0 )
+//				this.strategy = new CommonLetterKickOffStrategy();
+//			else
 				this.strategy = new MostPossibleWordsStrategy();
 		}
 		else {
@@ -119,7 +119,14 @@ public class G5_Scrabblista implements Player {
 		
 		turnNumber++;
 		
-		return strategy.getBid(this.gi, this.pi);
+		int[] answer = strategy.getBid(this.gi, this.pi);
+		int bid = answer[0];
+		int continueStrat = answer[1];
+		if( continueStrat == 0 ) {
+			//this.strategy = new SimpleStrategy();
+		}
+		
+		return bid;
 	}
 	
 	//this is stuff regarding probability and tiles remaining

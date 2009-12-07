@@ -25,25 +25,36 @@ public class MostPossibleWordsStrategy extends Strategy {
 	}
 
 	@Override
-	public int getBid(GameInfo gi, PlayerInfo pi) {
+	public int[] getBid(GameInfo gi, PlayerInfo pi) {
 		
-		ArrayList<Letter> targets = new ArrayList<Letter>();//.getLettersToTarget();
+		ArrayList<OurLetter> targets = new ArrayList<OurLetter>();//.getLettersToTarget();
 				
-		targets = pi.getDictionaryHandler().getLettersWithMostFutureWords( pi, 10 );
+		targets = pi.getDictionaryHandler().getLettersWithMostFutureWords( pi, gi, 10 );
+		for( OurLetter ltr: targets ) {
+			System.out.println(ltr.getAlphabet() + " has "+ltr.getNumWordsPossibleWithThisAdditionalLetter());
+		}
 		
 		Random r = new Random();
+
 		int whichTurn = gi.getPlayerList().size() * 7 - gi.getNoOfTurnsRemaining();
 		int scaledTurnScore = (10 * whichTurn) / (gi.getPlayerList().size() * 7);
 		System.out.println("scaled turn score " + scaledTurnScore);
 		int bid = r.nextInt(3) + gi.getCurrentBidLetter().getValue() + scaledTurnScore;//pi.getRack().size() + 
 //		bid += pi.getDictionaryHandler().
 //		ArrayList
-
-		for( Letter ltr: targets) 
-			if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() ))
-				return bid;
-				//return gi.getCurrentBidLetter().getValue() + (gi.getPlayerList().size() * 7 - gi.getNoOfTurnsRemaining())/2;
-				
-		return 0;
+		
+		int[] answer = { bid, 1 };
+		
+		for( OurLetter ltr: targets) 
+			if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() )) {
+				if( ltr.getNumWordsPossibleWithThisAdditionalLetter() < 1 ) {
+					answer[1] = 0;
+				}
+				return answer;
+			}
+		
+		answer[0] = 0;
+	
+		return answer;
 	}
 }

@@ -13,7 +13,10 @@ public class CommonLetterKickOffStrategy extends Strategy {
 	}
 
 	@Override
-	public int getBid(GameInfo gi, PlayerInfo pi) {
+	public int[] getBid(GameInfo gi, PlayerInfo pi) {
+		int bid = 20;
+		int continueStrat = 1;
+		int[] ans = { bid, continueStrat };
 		if ( pi.getRack().size() == 0 /*|| pi.getRack().size() == 1*/ ) {
 			if (
 			gi.getCurrentBidLetter().getAlphabet() == 'E' ||
@@ -23,8 +26,9 @@ public class CommonLetterKickOffStrategy extends Strategy {
 			gi.getCurrentBidLetter().getAlphabet() == 'N' ||
 			gi.getCurrentBidLetter().getAlphabet() == 'R' ||
 			gi.getCurrentBidLetter().getAlphabet() == 'T' )
-				return (20); //bid for common letters at first
+				return ans; //bid for common letters at first
 		}
-		return 0;
+		ans[0] = 0;
+		return ans;
 	}
 }

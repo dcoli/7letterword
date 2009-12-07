@@ -22,8 +22,10 @@ public class SingleSevenLetterStrategy extends Strategy {
 	}
 
 	@Override
-	public int getBid(GameInfo gi, PlayerInfo pi) {
+	public int[] getBid(GameInfo gi, PlayerInfo pi) {
 		
+		int[] answer = { (gi.getCurrentBidLetter().getValue() + 1), 1 };
+
 		ArrayList<Letter> hand = new ArrayList<Letter>();
 		for (Letter ltr: pi.getRack()) hand.add(ltr);
 		ArrayList<Letter> targets = pi.getLettersToTarget();
@@ -55,13 +57,13 @@ public class SingleSevenLetterStrategy extends Strategy {
 						}
 					}
 				}
-				
-				
+								
 				for( Letter ltr: targets) 
 					if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() ))
-						return gi.getCurrentBidLetter().getValue() + 1;
+						return answer;
 			}
 		}
-		return 0;
+		answer[0] = 0;
+		return answer;
 	}
 }
