@@ -15,7 +15,7 @@ import java.util.*;
 
 public abstract class Strategy {
 	
-	protected static Logger log;
+	protected Logger log;
 //	protected HashMap<Character, Integer> numberLettersRemaining = new HashMap<Character, Integer>();
 //	protected int bidpoints = 100;
 //	protected ArrayList<String> playerList;
@@ -129,7 +129,7 @@ public abstract class Strategy {
 //		numberLettersRemaining.put('Z', ScrabbleParameters.getCount('Z'));
 //	}
 
-	public abstract int getBid(GameInfo gi, PlayerInfo pi);
+	public abstract int[] getBid(GameInfo gi, PlayerInfo pi);
 
 	public String getFinalWord(GameInfo gi, PlayerInfo pi) {
 		log.debug("All Words In End!");

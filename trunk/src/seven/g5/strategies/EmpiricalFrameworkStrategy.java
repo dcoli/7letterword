@@ -16,7 +16,7 @@ public class EmpiricalFrameworkStrategy extends Strategy {
 	}
 
 	@Override
-	public int getBid(GameInfo gi, PlayerInfo pi) {
+	public int[] getBid(GameInfo gi, PlayerInfo pi) {
 		//make new fake hand with new letter
 		ArrayList<Letter> tempHand = new ArrayList<Letter>(pi.getRack());
 		tempHand.add(gi.getCurrentBidLetter());
@@ -26,11 +26,16 @@ public class EmpiricalFrameworkStrategy extends Strategy {
 		ArrayList<Word> tempAllWords = pi.getDictionaryHandler().futureAnagram(tempHand);
 		ArrayList<Word> allFutureWords = pi.getDictionaryHandler().getLegitWordsFromRemainingLetters(gi.getNumberLettersRemaining(), tempAllWords);
 		
+		int bid = gi.getCurrentBidLetter().getValue() + 1;
+		int continueStrat = 1;
+		int[] ans = { bid, continueStrat };
+
 		for(Word w : allFutureWords) {
 			if(w.toString().length() == 7) {
-				return gi.getCurrentBidLetter().getValue() + 1;
+				return ans;
 			}
 		}
-		return 0;
+		ans[0] = 0;
+		return ans;
 	}
 }
