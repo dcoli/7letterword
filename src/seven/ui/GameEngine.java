@@ -3,7 +3,11 @@ package seven.ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -536,6 +540,13 @@ public class GameEngine extends javax.swing.JFrame {
     * @param args the command line arguments
     */
     public static void main(String args[]) {
+//        System.setOut(
+//                new PrintStream(new OutputStream() {
+//			        @Override
+//			        public void write(int b) throws IOException {
+//			        }
+//                })); 
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GameEngine().setVisible(true);
