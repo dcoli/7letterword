@@ -51,4 +51,29 @@ public class Utilities {
 		}
 		return allFutureWords;
 	}
+	
+	public static int[] mimicLessThanSevenStrategy( PlayerInfo pi, GameInfo gi ) {
+		int[] answer = { 0, 0 };
+		Word currentBestWord = null;
+		ArrayList<Word> currentEndWordList = pi.getDictionaryHandler().pastAnagram(pi.getRack());
+		if( currentEndWordList != null )
+			currentBestWord = pi.getDictionaryHandler().getBestWordOfList(currentEndWordList);
+		ArrayList<Letter> tempHand = new ArrayList<Letter>(pi.getRack());
+		Word futureBestWord = null;
+		tempHand.add( gi.getCurrentBidLetter() );//new Letter ((char)('A'+c),ScrabbleParameters.getScore((char)('A'+c))));
+		ArrayList<Word> endWordList = pi.getDictionaryHandler().pastAnagram(tempHand);
+		if( endWordList != null )
+			futureBestWord = pi.getDictionaryHandler().getBestWordOfList(endWordList);
+		if( currentBestWord != null ) {
+			if( futureBestWord != null ) {
+				if( futureBestWord.getScore() > currentBestWord.getScore() ) {
+					answer[0] = futureBestWord.getScore() - currentBestWord.getScore();
+				}
+			}
+		}
+		else if( futureBestWord != null ) 
+			answer[0] = futureBestWord.getScore();
+
+		return answer;
+	}
 }

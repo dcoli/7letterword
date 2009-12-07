@@ -29,32 +29,40 @@ public class MostPossibleWordsStrategy extends Strategy {
 		
 		ArrayList<OurLetter> targets = new ArrayList<OurLetter>();//.getLettersToTarget();
 				
-		targets = pi.getDictionaryHandler().getLettersWithMostFutureWords( pi, gi, 10 );
-		for( OurLetter ltr: targets ) {
-			System.out.println(ltr.getAlphabet() + " has "+ltr.getNumWordsPossibleWithThisAdditionalLetter());
-		}
+		int numLettersToReturn = gi.getPlayerList().size() + 2;
+		targets = pi.getDictionaryHandler().getLettersWithMostFutureWords( pi, gi, numLettersToReturn );
+//		for( OurLetter ltr: targets ) {
+//			System.out.println(ltr.getAlphabet() + " has "+ltr.getNumWordsPossibleWithThisAdditionalLetter());
+//		}
 		
 		Random r = new Random();
-
-		int whichTurn = gi.getPlayerList().size() * 7 - gi.getNoOfTurnsRemaining();
-		int scaledTurnScore = (10 * whichTurn) / (gi.getPlayerList().size() * 7);
-		System.out.println("scaled turn score " + scaledTurnScore);
-		int bid = r.nextInt(3) + gi.getCurrentBidLetter().getValue() + scaledTurnScore;//pi.getRack().size() + 
-//		bid += pi.getDictionaryHandler().
-//		ArrayList
 		
-		int[] answer = { bid, 1 };
+		//set answer to bid, and flag to continue strat
+		int[] answer = { 0, 1 };
 		
-		for( OurLetter ltr: targets) 
-			if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() )) {
-				if( ltr.getNumWordsPossibleWithThisAdditionalLetter() < 1 ) {
-					answer[1] = 0;
-				}
-				return answer;
+		if( targets.size() == 0 ) {
+			//emergency mimicking of LessThanSevenLetterStrategy
+			//sets continue strategy flag to no
+			//finds best bid
+			answer = Utilities.mimicLessThanSevenStrategy(pi,gi);
 			}
+		else {
+			for( OurLetter ltr: targets) {
+				if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() )) {
+					int whichTurn = gi.getPlayerList().size() * 7 - gi.getNoOfTurnsRemaining();
+					int scaledTurnScore = (6 * whichTurn) / (gi.getPlayerList().size() * 7);
+					System.out.println("scaledTurnScore: "+scaledTurnScore);
+					int whichIndex = targets.size() - targets.indexOf(ltr);
+					int scaledIndexScore = (6 * whichIndex) / (targets.size());
+					System.out.println("scaled index score: "+scaledIndexScore);
+					answer[0] = scaledTurnScore + scaledIndexScore + r.nextInt(3);
+					return answer;
+				}
+			}
+		}
 		
+		//set bid to 0
 		answer[0] = 0;
-	
 		return answer;
 	}
 }
