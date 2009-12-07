@@ -90,12 +90,11 @@ public class G5_Scrabblista implements Player {
 		
 		//fill gameInfo
 		this.gi = new GameInfo(PlayerBidList, bidLetter, totalRounds, secretstate, PlayerList, numberTurnsRemaining, numberLettersRemaining, totalLettersRemaining);
-		if( PlayerList.size() > 3 ) {
-//			if( this.myRack.size() == 0 )
-//				this.strategy = new CommonLetterKickOffStrategy();
-//			else
+		if( PlayerList.size() > 5 ) {
+			if( this.myRack.size() == 0 )
+				this.strategy = new CommonLetterKickOffStrategy();
+			else
 				this.strategy = new MostPossibleWordsStrategy();
-				//this.strategy = new SingleSevenLetterStrategy();
 		}
 		else {
 			if( this.myRack.size() == 0 )

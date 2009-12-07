@@ -1,5 +1,8 @@
 package seven.g5.data;
 
+import java.util.ArrayList;
+
+import seven.ui.Letter;
 import seven.ui.Scrabble;
 import seven.g5.Logger;
 import seven.g5.Logger.LogLevel;
@@ -18,6 +21,14 @@ public class Word implements Comparable<Word>{
 	public Word(String stringRepresentation) {
 		this.setString(stringRepresentation);
 		this.setScore(calculateScore(string));
+	}
+	
+	public ArrayList<Letter> getLetters() {
+		ArrayList<Letter> al = new ArrayList<Letter>();
+		for (int c=0; c<string.length(); c++) {
+			al.add( new Letter(string.charAt(c), ScrabbleParameters.getScore(string.charAt(c))));
+		}
+		return al;
 	}
 
 	private int calculateScore(String string2) {

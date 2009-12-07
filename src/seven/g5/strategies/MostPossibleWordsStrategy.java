@@ -32,10 +32,13 @@ public class MostPossibleWordsStrategy extends Strategy {
 		targets = pi.getDictionaryHandler().getLettersWithMostFutureWords( pi, 10 );
 		
 		Random r = new Random();
-		int bid = r.nextInt(3) + pi.getRack().size() + 1;
+		int whichTurn = gi.getPlayerList().size() * 7 - gi.getNoOfTurnsRemaining();
+		int scaledTurnScore = (10 * whichTurn) / (gi.getPlayerList().size() * 7);
+		System.out.println("scaled turn score " + scaledTurnScore);
+		int bid = r.nextInt(3) + gi.getCurrentBidLetter().getValue() + scaledTurnScore;//pi.getRack().size() + 
 //		bid += pi.getDictionaryHandler().
 //		ArrayList
-				
+
 		for( Letter ltr: targets) 
 			if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() ))
 				return bid;
