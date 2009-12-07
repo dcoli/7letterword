@@ -81,7 +81,7 @@ public class Scrabble {
              case 'Q': score = 10;break;
              case 'Z': score = 10;break;
              case '*': score = 0;break;
-
+             default: throw new IllegalArgumentException("no score for " + letter);
 
          }
 
@@ -226,7 +226,7 @@ public class Scrabble {
         catch(Exception e)
         {
             e.printStackTrace();
-            //System.out.println("\n Could not load dictionary!");
+            System.out.println("\n Could not load dictionary!");
         }
 
     }

@@ -39,7 +39,7 @@ public class IOController {
             //Read File Line By Line
             while ((strLine = br.readLine()) != null)   {
               // Print the content on the console
-              ////System.out.println (strLine);
+              //System.out.println (strLine);
               PlayerNames.add(strLine);
             }
             //Close the input stream
@@ -61,11 +61,11 @@ public class IOController {
              myplayer = (Player) pc_object.newInstance();
 
         } catch (InstantiationException ex) {
-            //System.out.println("Player CLass " + playername + " could not be instantiated!");
+            System.out.println("Player CLass " + playername + " could not be instantiated!");
         } catch (IllegalAccessException ex) {
-            //System.out.println("Player CLass " + playername + " Illegal Access!");
+            System.out.println("Player CLass " + playername + " Illegal Access!");
         } catch (ClassNotFoundException ex) {
-            //System.out.println("Player CLass " + playername + " was not found!");
+            System.out.println("Player CLass " + playername + " was not found!");
         }
          return myplayer;
     }
