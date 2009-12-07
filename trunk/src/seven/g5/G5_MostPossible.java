@@ -85,6 +85,15 @@ public class G5_MostPossible implements Player {
 		}
 		else --numberTurnsRemaining;
 
+		//get results from last round
+		if(PlayerBidList != null && PlayerBidList.size() > 0 ) {
+			PlayerBids currentPlayerBids = (PlayerBids)(PlayerBidList.get(PlayerBidList.size()-1));
+			if( currentPlayerBids.getWinnerID() == this.pi.getPlayerId()){
+				this.totalPoints -= currentPlayerBids.getWinAmmount();
+				this.myRack.add(currentPlayerBids.getTargetLetter());
+			}			
+		}
+		
 		if( bidLetter != null )
 			decrementLettersRemainingInBag( bidLetter ); 
 
@@ -113,14 +122,7 @@ public class G5_MostPossible implements Player {
 			this.strategy = new LessThanSevenLetterStrategy();
 
 
-		//get results from last round
-		if(PlayerBidList != null && PlayerBidList.size() > 0 ) {
-			PlayerBids currentPlayerBids = (PlayerBids)(PlayerBidList.get(PlayerBidList.size()-1));
-			if( currentPlayerBids.getWinnerID() == this.pi.getPlayerId()){
-				this.totalPoints -= currentPlayerBids.getWinAmmount();
-				this.myRack.add(currentPlayerBids.getTargetLetter());
-			}			
-		}
+	
 		
 //		if(pi.getRack().size() >= 2) {
 //			this.strategy = new EmpiricalFrameworkStrategy();
