@@ -202,6 +202,7 @@ public class DictionaryHandler {
 		}
 		for( int index=0; index<i; index++ ) {
 			targets.add( binHeapOfOurLettersByNumPossibleWords.poll() );
+			System.out.println(targets.get(index).getAlphabet());
 		}
 		return targets;
 	}
