@@ -540,12 +540,12 @@ public class GameEngine extends javax.swing.JFrame {
     * @param args the command line arguments
     */
     public static void main(String args[]) {
-//        System.setOut(
-//                new PrintStream(new OutputStream() {
-//			        @Override
-//			        public void write(int b) throws IOException {
-//			        }
-//                })); 
+        System.setOut(
+                new PrintStream(new OutputStream() {
+			        @Override
+			        public void write(int b) throws IOException {
+			        }
+                })); 
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
