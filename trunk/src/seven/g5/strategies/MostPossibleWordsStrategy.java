@@ -30,12 +30,10 @@ public class MostPossibleWordsStrategy extends Strategy {
 		ArrayList<OurLetter> targets = new ArrayList<OurLetter>();//.getLettersToTarget();
 				
 		int numLettersToReturn = gi.getPlayerList().size() + 2;
-		System.err.println("before future "+pi.getPlayerId()+" "+pi.rackString());
 		targets = pi.getDictionaryHandler().getLettersWithMostFutureWords( pi, gi, numLettersToReturn );
 //		for( OurLetter ltr: targets ) {
 //			System.out.println(ltr.getAlphabet() + " has "+ltr.getNumWordsPossibleWithThisAdditionalLetter());
 //		}
-		System.err.println("after future "+pi.getPlayerId()+" "+pi.rackString());
 		
 		Random r = new Random();
 		
