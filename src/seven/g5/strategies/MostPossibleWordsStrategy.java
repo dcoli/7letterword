@@ -30,10 +30,12 @@ public class MostPossibleWordsStrategy extends Strategy {
 		ArrayList<OurLetter> targets = new ArrayList<OurLetter>();//.getLettersToTarget();
 				
 		int numLettersToReturn = gi.getPlayerList().size() + 2;
+		System.err.println("before future "+pi.getPlayerId()+" "+pi.rackString());
 		targets = pi.getDictionaryHandler().getLettersWithMostFutureWords( pi, gi, numLettersToReturn );
 //		for( OurLetter ltr: targets ) {
 //			System.out.println(ltr.getAlphabet() + " has "+ltr.getNumWordsPossibleWithThisAdditionalLetter());
 //		}
+		System.err.println("after future "+pi.getPlayerId()+" "+pi.rackString());
 		
 		Random r = new Random();
 		
@@ -50,10 +52,10 @@ public class MostPossibleWordsStrategy extends Strategy {
 			for( OurLetter ltr: targets) {
 				if( gi.getCurrentBidLetter().getAlphabet().equals( ltr.getAlphabet() )) {
 					int whichTurn = gi.getPlayerList().size() * 7 - gi.getNoOfTurnsRemaining();
-					int scaledTurnScore = (6 * whichTurn) / (gi.getPlayerList().size() * 7);
+					int scaledTurnScore = (5 * whichTurn) / (gi.getPlayerList().size() * 7);
 					System.out.println("scaledTurnScore: "+scaledTurnScore);
 					int whichIndex = targets.size() - targets.indexOf(ltr);
-					int scaledIndexScore = (6 * whichIndex) / (targets.size());
+					int scaledIndexScore = (5 * whichIndex) / (targets.size());
 					System.out.println("scaled index score: "+scaledIndexScore);
 					answer[0] = scaledTurnScore + scaledIndexScore + r.nextInt(3);
 					return answer;

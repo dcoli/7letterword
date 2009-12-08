@@ -207,6 +207,7 @@ public class DictionaryHandler {
 			binHeapOfOurLettersByNumPossibleWords.add(Let);
 			hand.remove( hand.size() - 1 );
 		}
+		//here
 		for( int index=0; index<i; index++ ) {
 			if( ((OurLetter)binHeapOfOurLettersByNumPossibleWords.peek()).getNumWordsPossibleWithThisAdditionalLetter() > 0 )
 			targets.add( (OurLetter)binHeapOfOurLettersByNumPossibleWords.poll() );
