@@ -177,7 +177,7 @@ public class DictionaryHandler {
 			}
 			if(i < str.length()) continue ;
 			goodAnagrams.add(new Word(str)) ;
-			log.debug("possible word: "+str);
+			System.out.println("g5 possible word: "+str);
 		}
 		return goodAnagrams;
 	}
@@ -207,7 +207,6 @@ public class DictionaryHandler {
 			binHeapOfOurLettersByNumPossibleWords.add(Let);
 			hand.remove( hand.size() - 1 );
 		}
-		//here
 		for( int index=0; index<i; index++ ) {
 			if( ((OurLetter)binHeapOfOurLettersByNumPossibleWords.peek()).getNumWordsPossibleWithThisAdditionalLetter() > 0 )
 			targets.add( (OurLetter)binHeapOfOurLettersByNumPossibleWords.poll() );
