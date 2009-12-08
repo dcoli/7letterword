@@ -59,12 +59,12 @@ public class G5_Scrabblista implements Player {
 	}
 
 	public String returnWord() {
-		System.err.println("turns remaining "+this.numberTurnsRemaining);
+		System.out.println("turns remaining "+this.numberTurnsRemaining);
 		if( this.numberTurnsRemaining == 1 && this.pi.getRack() != null && this.pi.getRack().size() < 7) {
 			this.pi.getRack().add(this.bidLetter);
 		}
 		String finalWord = strategy.getFinalWord(this.gi, this.pi);
-		System.err.println("after calculating final word we have "+pi.rackString());
+		System.out.println("after calculating final word we have "+pi.rackString());
 		this.turnNumber = 0;
 		this.myRack.clear();
 		this.pi.setRack(myRack);
@@ -98,15 +98,15 @@ public class G5_Scrabblista implements Player {
 		//get results from last round
 		if(PlayerBidList != null && PlayerBidList.size() > 0 ) {
 			PlayerBids currentPlayerBids = (PlayerBids)(PlayerBidList.get(PlayerBidList.size()-1));
-//			System.err.println(currentPlayerBids.getWinnerID());
-//			System.err.println(currentPlayerBids.getTargetLetter().getAlphabet());
+//			System.out.println(currentPlayerBids.getWinnerID());
+//			System.out.println(currentPlayerBids.getTargetLetter().getAlphabet());
 			if( currentPlayerBids.getWinnerID() == this.pi.getPlayerId()){
 				this.totalPoints -= currentPlayerBids.getWinAmmount();
 				if (myRack != null && myRack.size() < 7)
 					this.myRack.add(currentPlayerBids.getTargetLetter());
 			}
 		}
-		if(pi != null) System.err.println("after adding to my rack we have "+pi.rackString());
+		if(pi != null) System.out.println("after adding to my rack we have "+pi.rackString());
 		
 		if( bidLetter != null )
 			decrementLettersRemainingInBag( bidLetter ); 

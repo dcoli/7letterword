@@ -135,10 +135,10 @@ public abstract class Strategy {
 		log.debug("All Words In End!");
 		
 		int i=0;
-		System.err.print("final word out of ");
+		System.out.print("final word out of ");
 		for( Letter l: pi.getRack() ) 
-			System.err.print( (i++==0?"":",")+l.getAlphabet());//pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
-		System.err.println("");
+			System.out.print( (i++==0?"":",")+l.getAlphabet());//pi.getDictionaryHandler().pastAnagram(pi.getRack())).toString();
+		System.out.println("");
 		
 		ArrayList<Word> endWordList = pi.getDictionaryHandler().pastAnagram(pi.getRack());
 		
