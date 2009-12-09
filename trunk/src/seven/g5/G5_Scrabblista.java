@@ -65,6 +65,11 @@ public class G5_Scrabblista implements Player {
 		}
 		String finalWord = strategy.getFinalWord(this.gi, this.pi);
 		System.out.println("after calculating final word we have "+pi.rackString());
+//		if( this.numberTurnsRemaining == 1 && this.pi.getRack() != null && this.pi.getRack().size() < 7) {
+//			this.pi.getRack().add(this.bidLetter);
+//		}
+//		String finalWord = strategy.getFinalWord(this.gi, this.pi);
+//		System.out.println("after calculating final word we have "+pi.rackString());
 		this.turnNumber = 0;
 		this.myRack.clear();
 		this.pi.setRack(myRack);
@@ -82,40 +87,44 @@ public class G5_Scrabblista implements Player {
 		this.bidLetter = bidLetter;
 		
 		if(this.turnNumber == 0) {
+			this.myRack.clear();
+			pi = null;
+			gi = null;
 			numberTurnsRemaining =  PlayerList.size() * 7;
 			initializeLettersRemaining();
-			for(Letter ltr : secretstate.getSecretLetters()) {
-				if( ltr != null ) { 
-					this.myRack.add(new Letter(ltr.getAlphabet(),ScrabbleParameters.getScore(ltr.getAlphabet())));
-					decrementLettersRemainingInBag( ltr );
+
+			for(int i = 0; i<secretstate.getSecretLetters().size(); i++)
+			{
+				char c = secretstate.getSecretLetters().get(i).getAlphabet();
+				Letter ltr = new Letter(c, ScrabbleParameters.getScore(c));
+				myRack.add(i, ltr);
+				decrementLettersRemainingInBag( ltr );
+			}
+		}
+		else {
+			--numberTurnsRemaining;
+			//get results from last round
+			if(PlayerBidList != null && PlayerBidList.size() > 0 ) {
+				PlayerBids currentPlayerBids = (PlayerBids)(PlayerBidList.get(PlayerBidList.size()-1));
+				if( currentPlayerBids.getWinnerID() == PlayerID ){
+					this.totalPoints -= currentPlayerBids.getWinAmmount();
+					if (myRack != null && myRack.size() < 7)
+						this.myRack.add(currentPlayerBids.getTargetLetter());
 				}
 			}
+
+			if( bidLetter != null )
+				decrementLettersRemainingInBag( bidLetter ); 
 		}
-		
-		else --numberTurnsRemaining;
 		
 
-		//get results from last round
-		if(PlayerBidList != null && PlayerBidList.size() > 0 ) {
-			PlayerBids currentPlayerBids = (PlayerBids)(PlayerBidList.get(PlayerBidList.size()-1));
-//			System.out.println(currentPlayerBids.getWinnerID());
-//			System.out.println(currentPlayerBids.getTargetLetter().getAlphabet());
-			if( currentPlayerBids.getWinnerID() == this.pi.getPlayerId()){
-				this.totalPoints -= currentPlayerBids.getWinAmmount();
-				if (myRack != null && myRack.size() < 7)
-					this.myRack.add(currentPlayerBids.getTargetLetter());
-			}
-		}
-		if(pi != null) System.out.println("after adding to my rack we have "+pi.rackString());
-		
-		if( bidLetter != null )
-			decrementLettersRemainingInBag( bidLetter ); 
 
 		//fill person info
 		this.pi = new PlayerInfo(this.myRack, PlayerID, this.dh);
 		
 		//fill gameInfo
 		this.gi = new GameInfo(PlayerBidList, bidLetter, totalRounds, secretstate, PlayerList, numberTurnsRemaining, numberLettersRemaining, totalLettersRemaining);
+
 		if( continueStratFlag == 1 ) {
 			if( PlayerList.size() > 0 ) {
 					this.strategy = new MostPossibleWordsStrategy();
@@ -131,13 +140,6 @@ public class G5_Scrabblista implements Player {
 		}
 		else //a strategy has indicated that no more seven letter words can be found
 			this.strategy = new LessThanSevenLetterStrategy();
-
-
-	//it was here
-		
-//		if(pi.getRack().size() >= 2) {
-//			this.strategy = new EmpiricalFrameworkStrategy();
-//		}
 		
 		turnNumber++;
 		

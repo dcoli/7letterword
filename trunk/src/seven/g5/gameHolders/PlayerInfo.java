@@ -19,6 +19,7 @@ public class PlayerInfo {
 		this.playerId = playerId;
 		this.dictionaryHandler = dh;
 		this.lettersToTarget = new ArrayList<Letter>();
+		System.err.println(rackString());
 	}
 	
 	public String rackString() {

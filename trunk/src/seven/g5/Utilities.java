@@ -52,7 +52,7 @@ public class Utilities {
 		return allFutureWords;
 	}
 	
-	public int[] mimicLessThanSevenStrategy( PlayerInfo pi, GameInfo gi ) {
+	public static int[] mimicLessThanSevenStrategy( PlayerInfo pi, GameInfo gi ) {
 		int[] answer = { 0, 0 };
 		Word currentBestWord = null;
 		ArrayList<Word> currentEndWordList = pi.getDictionaryHandler().pastAnagram(pi.getRack());
