@@ -9,7 +9,7 @@ import seven.ui.*;
 
 public class Utilities {
 	//effective java and headfirst java
-	public static double getProbabilityOfLetter(Letter letter1, GameInfo gi)	
+	public double getProbabilityOfLetter(Letter letter1, GameInfo gi)	
 	{
 		double p = 0;
 		////System.out.println(gi.getNoOfTurnsRemaining());
@@ -21,14 +21,14 @@ public class Utilities {
 		return p;
 	}
 	
-	public static void printLetters(List<Letter> hand) {
+	public void printLetters(List<Letter> hand) {
 		for(Letter l : hand) {
 			System.out.print(l.getAlphabet() + ", ");
 		}
 		//System.out.println();
 	}
 	
-	public static ArrayList<Word> calculateProbabilitiesOfWord(ArrayList<Word> allFutureWords,
+	public ArrayList<Word> calculateProbabilitiesOfWord(ArrayList<Word> allFutureWords,
 			GameInfo gi) {
 		double prob;
 		for( Word w: allFutureWords ) {
@@ -52,7 +52,7 @@ public class Utilities {
 		return allFutureWords;
 	}
 	
-	public static int[] mimicLessThanSevenStrategy( PlayerInfo pi, GameInfo gi ) {
+	public int[] mimicLessThanSevenStrategy( PlayerInfo pi, GameInfo gi ) {
 		int[] answer = { 0, 0 };
 		Word currentBestWord = null;
 		ArrayList<Word> currentEndWordList = pi.getDictionaryHandler().pastAnagram(pi.getRack());
